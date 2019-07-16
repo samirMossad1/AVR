@@ -20,6 +20,35 @@
 
 
 
+typedef enum port
+{
+	PORT_A,
+	PORT_B,
+	PORT_C,
+	PORT_D
+
+}GPIO_PORT;
+
+typedef enum pin
+{
+	PIN_0,
+	PIN_1,
+	PIN_2,
+	PIN_3,
+	PIN_4,
+	PIN_5,
+	PIN_6
+
+}GPIO_PIN;
+
+typedef enum extinterrupt
+{
+	INTERRUPT_0,
+	INTERRUPT_1,
+	INTERRUPT_2
+
+}GPIO_INTERRUPT_NUMBER;
+
 
 
 
