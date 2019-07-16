@@ -76,6 +76,14 @@ void GPIO_togglePin(const GPIO_PORT , const GPIO_PIN);
 
 
 
+bool GPIO_intEnable(const GPIO_INTERRUPT_NUMBER);
+
+bool GPIO_intDisable(const GPIO_INTERRUPT_NUMBER);
+
+bool GPIO_intInitialize(const GPIO_intConfigStruct*);
+
+
+
 
 
 
