@@ -185,3 +185,47 @@ void GPIO_togglePin(const GPIO_PORT PORT , const GPIO_PIN PIN)
 							break;
 		}
 }
+
+void GPIO_pinPullUpInit(const GPIO_PORT PORT, const GPIO_PIN PIN)
+{
+
+	switch(PORT)
+		{
+			case 'PORT_A':
+						SET_BIT(GPIO_PORTA_OUTPUT_REGISTER,PIN);
+							break;
+			case 'PORT_B':
+						SET_BIT(GPIO_PORTB_OUTPUT_REGISTER,PIN);
+							break;
+			case 'PORT_C':
+						SET_BIT(GPIO_PORTC_OUTPUT_REGISTER,PIN);
+							break;
+			case 'PORT_D':
+						SET_BIT(GPIO_PORTD_OUTPUT_REGISTER,PIN);
+							break;
+		}
+
+}
+
+
+void GPIO_portPullUpInit(const GPIO_PORT PORT)
+{
+
+	switch(PORT)
+		{
+			case 'PORT_A':
+						GPIO_PORTA_OUTPUT_REGISTER=0xFF;
+							break;
+			case 'PORT_B':
+						GPIO_PORTB_OUTPUT_REGISTER=0xFF;
+							break;
+			case 'PORT_C':
+						GPIO_PORTC_OUTPUT_REGISTER=0xFF;
+							break;
+			case 'PORT_D':
+						GPIO_PORTD_OUTPUT_REGISTER=0xFF;
+							break;
+		}
+
+}
+
