@@ -64,6 +64,19 @@ void	GPIO_togglePort(const GPIO_PORT);
 
 
 
+bool	GPIO_pinInit(const GPIO_pinConfigStruct*);
+
+uint8_t	GPIO_readPin(const GPIO_PORT , const GPIO_PIN);
+
+void GPIO_writePin(const GPIO_PORT , const GPIO_PIN ,const uint8_t);
+
+void GPIO_togglePin(const GPIO_PORT , const GPIO_PIN);
+
+
+
+
+
+
 
 
 
