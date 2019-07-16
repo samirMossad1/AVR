@@ -66,7 +66,7 @@ void WATCHDOG_init(const WATCHDOG_PRESCALAR );
 
 void WATCHDOG_enable();
 
-void WATCHDOF_disable();
+void WATCHDOG_disable();
 
 
 
