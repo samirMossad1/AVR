@@ -267,7 +267,34 @@ bool GPIO_interruptDisable(const GPIO_INTERRUPT_NUMBER INT_NUMBER)
 
 bool GPIO_interruptInit(const GPIO_intConfigStruct* ConfigStructPtr)
 {
+	uint8_t sense_controlOffset=0x00,clear_mask=0x03;
+
+	if(ConfigStructPtr == NULL_PTR) return FALSE;
+
+
+	switch(ConfigStructPtr->INTERRUPT_NUMBER)
+	{
+
+	case 'INTERRUPT_0':
+						sense_controlOffset=(ConfigStructPtr->INTERRUPT_EDGE_SELECT);
+						break;
+
+	case 'INTERRUPT_1':
+						sense_controlOffset=(ConfigStructPtr->INTERRUPT_EDGE_SELECT) << 0x02;
+						clear_mask=0x06;
+						break;
+
+	case 'INTERRUPT_2':
+						sense_controlOffset=(ConfigStructPtr->INTERRUPT_EDGE_SELECT) << 0x06;
+						clear_mask=0x40;
+						break;
+	}
+
+
+GPIO_INTERRUPT_SENSE_CONTROL_REGISTER=((GPIO_INTERRUPT_SENSE_CONTROL_REGISTER & ~(clear_mask) ) | sense_controlOffset ) ;
 
 
 
+
+	return TRUE;
 }
