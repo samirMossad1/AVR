@@ -1,6 +1,37 @@
 
-
 #include "gpio.h"
+
+
+static void (*ISR_GPIO_IntCallBackPtr[3])(void)={NULL_PTR,NULL_PTR,NULL_PTR};
+
+
+
+
+
+
+ISR(INT0_vect)
+{
+	ISR_GPIO_IntCallBackPtr[0]();
+	SET_BIT(GPIO_MASKED_INTERRUPT_FLAG_REGISTER,GPIO_INT01_OFFSET);
+}
+
+
+ISR(INT1_vect)
+{
+	ISR_GPIO_IntCallBackPtr[1]();
+	SET_BIT(GPIO_MASKED_INTERRUPT_FLAG_REGISTER,GPIO_INT1_OFFSET);
+}
+
+
+ISR(INT2_vect)
+{
+	ISR_GPIO_IntCallBackPtr[2]();
+	SET_BIT(GPIO_MASKED_INTERRUPT_FLAG_REGISTER,GPIO_INT2_OFFSET);
+}
+
+
+
+
 
 
 bool   GPIO_portInit(const GPIO_portConfigStruct* ConfigStructptr)
@@ -271,6 +302,7 @@ bool GPIO_interruptInit(const GPIO_intConfigStruct* ConfigStructPtr)
 
 	if(ConfigStructPtr == NULL_PTR) return FALSE;
 
+	ISR_GPIO_IntCallBackPtr[ConfigStructPtr->INTERRUPT_NUMBER]=ConfigStructPtr->ISR_ptr;
 
 	switch(ConfigStructPtr->INTERRUPT_NUMBER)
 	{
@@ -292,8 +324,6 @@ bool GPIO_interruptInit(const GPIO_intConfigStruct* ConfigStructPtr)
 
 
 GPIO_INTERRUPT_SENSE_CONTROL_REGISTER=((GPIO_INTERRUPT_SENSE_CONTROL_REGISTER & ~(clear_mask) ) | sense_controlOffset ) ;
-
-
 
 
 	return TRUE;
