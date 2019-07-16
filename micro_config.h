@@ -24,11 +24,19 @@
 #define GPIO_INT01_OFFSET			(0X06)
 #define GPIO_INT1_OFFSET			(0X07)
 #define GPIO_INT2_OFFSET			(0X05)
+#define BIT_0						(0X0)
+#define BIT_1						(0X1)
+#define BIT_2						(0X2)
+#define BIT_3						(0X3)
+#define BIT_4						(0X4)
+#define BIT_5						(0X5)
+#define BIT_6						(0X6)
+#define BIT_7						(0X7)
+
 
 
 
 /**  GPIO REGISTERS  **/
-
 
 #define GPIO_PORTA_DIRECTION_REGISTER		DDRA
 #define GPIO_PORTA_OUTPUT_REGISTER			PORTA
@@ -52,6 +60,11 @@
 #define GPIO_MASKED_INTERRUPT_FLAG_REGISTER 	GIFR
 
 
+
+/** WATCHDOG RESET TIMER REGISTERS **/
+
+#define MCU_CONTROL_STATUS_REGISTER				MCUCSR
+#define WATCHDOG_TIMER_CONTROL_REGISTER			WDTCR
 
 
 
