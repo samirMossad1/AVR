@@ -266,22 +266,6 @@ bool GPIO_interruptEnable(const GPIO_INTERRUPT_NUMBER);
  *--------------------------------------------------------------*/
 bool GPIO_interruptDisable(const GPIO_INTERRUPT_NUMBER);
 
-/* ------------------------------------------------------------
- *Function-Name:GPIO_interruptDisable
- *
- *Description:
- *
- *Inputs:
- *
- *Returns:
- *			True if succeeded
- *			False if failed
- *
- *--------------------------------------------------------------*/
-
-
-
-
 
 
 #endif
