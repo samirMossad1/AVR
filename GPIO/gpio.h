@@ -141,6 +141,19 @@ void	GPIO_writePort(const GPIO_PORT, const uint8_t);
 void	GPIO_togglePort(const GPIO_PORT);
 
 
+
+/* ------------------------------------------------------------
+ *Function-Name:GPIO_togglePort
+ *
+ *Description:
+ *
+ *Inputs:
+ *
+ *Returns: void
+ *
+ *--------------------------------------------------------------*/
+void GPIO_portPullUpInit(const GPIO_PORT);
+
 /* ------------------------------------------------------------
  *Function-Name:GPIO_pinInit
  *
