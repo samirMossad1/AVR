@@ -21,8 +21,7 @@
 
 /** Magical Numbers **/
 
-#define GPIO_INT0_OFFSET			(0X06)
-#define GPIO_INT1_OFFSET			(0X07)
+#define GPIO_INT01_OFFSET			(0X06)
 #define GPIO_INT2_OFFSET			(0X05)
 
 
@@ -82,9 +81,9 @@ typedef enum pin
 
 typedef enum extinterrupt
 {
-	INTERRUPT_0=GPIO_INT0_OFFSET,
-	INTERRUPT_1=GPIO_INT1_OFFSET,
-	INTERRUPT_2=GPIO_INT2_OFFSET
+	INTERRUPT_0,
+	INTERRUPT_1,
+	INTERRUPT_2
 
 }GPIO_INTERRUPT_NUMBER;
 

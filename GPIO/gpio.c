@@ -232,13 +232,42 @@ void GPIO_portPullUpInit(const GPIO_PORT PORT)
 
 bool GPIO_interruptEnable(const GPIO_INTERRUPT_NUMBER INT_NUMBER)
 {
-	SET_BIT(GPIO_MODULE_INTERRUPT_CONTROL_REGISTER,INT_NUMBER);
-	SET_BIT(GPIO_MASKED_INTERRUPT_FLAG_REGISTER,INT_NUMBER);
+	uint8_t interrupt_number=0;
+
+	if(INT_NUMBER== INTERRUPT_2)
+	{
+		interrupt_number+=GPIO_INT2_OFFSET;
+	}
+	else
+	{
+		interrupt_number+=GPIO_INT01_OFFSET;
+	}
+
+	SET_BIT(GPIO_MODULE_INTERRUPT_CONTROL_REGISTER,interrupt_number);
+	SET_BIT(GPIO_MASKED_INTERRUPT_FLAG_REGISTER,interrupt_number);
 	return TRUE;
 }
 
 bool GPIO_interruptDisable(const GPIO_INTERRUPT_NUMBER INT_NUMBER)
 {
-	RESET_BIT(GPIO_MODULE_INTERRUPT_CONTROL_REGISTER,INT_NUMBER);
+	uint8_t interrupt_number=0;
+
+	if(INT_NUMBER== INTERRUPT_2)
+	{
+		interrupt_number+=GPIO_INT2_OFFSET;
+	}
+	else
+	{
+		interrupt_number+=GPIO_INT01_OFFSET;
+	}
+
+	RESET_BIT(GPIO_MODULE_INTERRUPT_CONTROL_REGISTER,interrupt_number);
 	return TRUE;
+}
+
+bool GPIO_interruptInit(const GPIO_intConfigStruct* ConfigStructPtr)
+{
+
+
+
 }
