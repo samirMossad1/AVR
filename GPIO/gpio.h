@@ -54,6 +54,21 @@ typedef struct GPIO_int
 
 
 
+bool   GPIO_portInit(const GPIO_portConfigStruct*);
+
+uint8_t GPIO_readPort(const GPIO_PORT);
+
+void	GPIO_writePort(const GPIO_PORT, const uint8_t);
+
+void	GPIO_togglePort(const GPIO_PORT);
+
+
+
+
+
+
+
+
 
 
 
