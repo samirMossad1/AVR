@@ -42,19 +42,19 @@ bool   GPIO_portInit(const GPIO_portConfigStruct* ConfigStructptr)
 		switch(ConfigStructptr->PORT)
 		{
 
-		case 'PORT_A':
+		case PORT_A:
 			GPIO_PORTA_DIRECTION_REGISTER=(ConfigStructptr->PORT_TYPE == _INPUT)?0X00:0XFF;
 			break;
 
-		case 'PORT_B':
+		case PORT_B:
 			GPIO_PORTB_DIRECTION_REGISTER=(ConfigStructptr->PORT_TYPE == _INPUT)?0X00:0XFF;
 			break;
 
-		case 'PORT_C':
+		case PORT_C:
 			GPIO_PORTC_DIRECTION_REGISTER=(ConfigStructptr->PORT_TYPE == _INPUT)?0X00:0XFF;
 			break;
 
-		case 'PORT_D':
+		case PORT_D:
 			GPIO_PORTD_DIRECTION_REGISTER=(ConfigStructptr->PORT_TYPE == _INPUT)?0X00:0XFF;
 			break;
 		}
@@ -66,12 +66,13 @@ bool   GPIO_portInit(const GPIO_portConfigStruct* ConfigStructptr)
 bool	GPIO_pinInit(const GPIO_pinConfigStruct* ConfigStructptr)
 {
 
+
 	if(ConfigStructptr == NULL_PTR) return FALSE;
 
 	switch(ConfigStructptr->PORT)
 	{
 
-	case 'PORT_A':
+	case PORT_A:
 				if(ConfigStructptr->PIN_TYPE == _INPUT)
 				{
 					RESET_BIT(GPIO_PORTA_DIRECTION_REGISTER,ConfigStructptr->PIN);
@@ -82,7 +83,7 @@ bool	GPIO_pinInit(const GPIO_pinConfigStruct* ConfigStructptr)
 				}
 				break;
 
-	case 'PORT_B':
+	case PORT_B:
 				if(ConfigStructptr->PIN_TYPE == _INPUT)
 				{
 					RESET_BIT(GPIO_PORTB_DIRECTION_REGISTER,ConfigStructptr->PIN);
@@ -94,7 +95,7 @@ bool	GPIO_pinInit(const GPIO_pinConfigStruct* ConfigStructptr)
 				break;
 
 
-	case 'PORT_C':
+	case PORT_C:
 				if(ConfigStructptr->PIN_TYPE == _INPUT)
 				{
 					RESET_BIT(GPIO_PORTC_DIRECTION_REGISTER,ConfigStructptr->PIN);
@@ -106,7 +107,7 @@ bool	GPIO_pinInit(const GPIO_pinConfigStruct* ConfigStructptr)
 				break;
 
 
-	case 'PORT_D':
+	case PORT_D:
 				if(ConfigStructptr->PIN_TYPE == _INPUT)
 				{
 					RESET_BIT(GPIO_PORTD_DIRECTION_REGISTER,ConfigStructptr->PIN);
@@ -129,10 +130,10 @@ uint8_t GPIO_readPort(const GPIO_PORT PORT)
 {
 	switch(PORT)
 	{
-	case 'PORT_A': return GPIO_PORTA_INPUT_REGISTER;
-	case 'PORT_B': return GPIO_PORTB_INPUT_REGISTER;
-	case 'PORT_C': return GPIO_PORTC_INPUT_REGISTER;
-	case 'PORT_D': return GPIO_PORTD_INPUT_REGISTER;
+	case PORT_A: return GPIO_PORTA_INPUT_REGISTER;
+	case PORT_B: return GPIO_PORTB_INPUT_REGISTER;
+	case PORT_C: return GPIO_PORTC_INPUT_REGISTER;
+	case PORT_D: return GPIO_PORTD_INPUT_REGISTER;
 	default 	 : return GPIO_PORTA_INPUT_REGISTER;
 	}
 }
@@ -142,10 +143,10 @@ uint8_t	GPIO_readPin(const GPIO_PORT PORT, const GPIO_PIN PIN)
 {
 	switch(PORT)
 		{
-			case 'PORT_A': return( GPIO_PORTA_INPUT_REGISTER & (1<<PIN) );
-			case 'PORT_B': return( GPIO_PORTB_INPUT_REGISTER & (1<<PIN) );
-			case 'PORT_C': return( GPIO_PORTC_INPUT_REGISTER & (1<<PIN) );
-			case 'PORT_D': return( GPIO_PORTD_INPUT_REGISTER & (1<<PIN) );
+			case PORT_A: return( GPIO_PORTA_INPUT_REGISTER & (1<<PIN) );
+			case PORT_B: return( GPIO_PORTB_INPUT_REGISTER & (1<<PIN) );
+			case PORT_C: return( GPIO_PORTC_INPUT_REGISTER & (1<<PIN) );
+			case PORT_D: return( GPIO_PORTD_INPUT_REGISTER & (1<<PIN) );
 			default 	 : return( GPIO_PORTA_INPUT_REGISTER & (1<<PIN) );
 
 		}
@@ -153,47 +154,80 @@ uint8_t	GPIO_readPin(const GPIO_PORT PORT, const GPIO_PIN PIN)
 
 
 
-void	GPIO_writePort(const GPIO_PORT PORT, const uint8_t data)
+void	GPIO_writePort(const GPIO_PORT PORT, const GPIO_LEVEL data)
 {
+	uint8_t data_mapped=0x00;
+
+	if(data==_HIGH)
+	{
+		data_mapped=0xFF;
+	}
+
 	switch(PORT)
 		{
-			case 'PORT_A': GPIO_PORTA_OUTPUT_REGISTER=data;
+			case PORT_A: GPIO_PORTA_OUTPUT_REGISTER=data_mapped;
 						   	   break;
-			case 'PORT_B': GPIO_PORTB_OUTPUT_REGISTER=data;
+			case PORT_B: GPIO_PORTB_OUTPUT_REGISTER=data_mapped;
 							   break;
-			case 'PORT_C': GPIO_PORTC_OUTPUT_REGISTER=data;
+			case PORT_C: GPIO_PORTC_OUTPUT_REGISTER=data_mapped;
 							   break;
-			case 'PORT_D': GPIO_PORTD_OUTPUT_REGISTER=data;
+			case PORT_D: GPIO_PORTD_OUTPUT_REGISTER=data_mapped;
 							   break;
 		}
 }
 
 
-void GPIO_writePin(const GPIO_PORT PORT, const GPIO_PIN PIN,const uint8_t data)
+void GPIO_writePin(const GPIO_PORT PORT, const GPIO_PIN PIN,const GPIO_LEVEL data)
 {
 	switch(PORT)
 		{
-			case 'PORT_A':
+			case PORT_A:
+
+						if(data == _LOW)
+						{
 							RESET_BIT(GPIO_PORTA_OUTPUT_REGISTER,PIN);
-							GPIO_PORTA_OUTPUT_REGISTER|=(data & 0x01);
-						   	   break;
+						}
+						else
+						{
+							 SET_BIT(GPIO_PORTA_OUTPUT_REGISTER,PIN);
+						}
+						break;
 
-			case 'PORT_B':
+
+			case PORT_B:
+						if(data == _LOW)
+						{
 							RESET_BIT(GPIO_PORTB_OUTPUT_REGISTER,PIN);
-							GPIO_PORTB_OUTPUT_REGISTER|=(data & 0x01);
-						   	   break;
+						}
+						else
+						{
+							 SET_BIT(GPIO_PORTB_OUTPUT_REGISTER,PIN);
+						}
+						break;
 
 
-			case 'PORT_C':
+			case PORT_C:
+						if(data == _LOW)
+						{
 							RESET_BIT(GPIO_PORTC_OUTPUT_REGISTER,PIN);
-							GPIO_PORTC_OUTPUT_REGISTER|=(data & 0x01);
-						   	   break;
+						}
+						else
+						{
+							 SET_BIT(GPIO_PORTC_OUTPUT_REGISTER,PIN);
+						}
+						break;
 
 
-			case 'PORT_D':
+			case PORT_D:
+						if(data == _LOW)
+						{
 							RESET_BIT(GPIO_PORTD_OUTPUT_REGISTER,PIN);
-							GPIO_PORTD_OUTPUT_REGISTER|=(data & 0x01);
-						   	   break;
+						}
+						else
+						{
+							 SET_BIT(GPIO_PORTD_OUTPUT_REGISTER,PIN);
+						}
+						break;
 				}
 }
 
@@ -202,16 +236,16 @@ void GPIO_togglePin(const GPIO_PORT PORT , const GPIO_PIN PIN)
 
 	switch(PORT)
 		{
-			case 'PORT_A':
+			case  PORT_A :
 						TOGGLE_BIT(GPIO_PORTA_OUTPUT_REGISTER,PIN);
 							break;
-			case 'PORT_B':
+			case  PORT_B :
 						TOGGLE_BIT(GPIO_PORTB_OUTPUT_REGISTER,PIN);
 							break;
-			case 'PORT_C':
+			case  PORT_C :
 						TOGGLE_BIT(GPIO_PORTC_OUTPUT_REGISTER,PIN);
 							break;
-			case 'PORT_D':
+			case  PORT_D :
 						TOGGLE_BIT(GPIO_PORTD_OUTPUT_REGISTER,PIN);
 							break;
 		}
@@ -222,16 +256,16 @@ void GPIO_pinPullUpInit(const GPIO_PORT PORT, const GPIO_PIN PIN)
 
 	switch(PORT)
 		{
-			case 'PORT_A':
+			case  PORT_A :
 						SET_BIT(GPIO_PORTA_OUTPUT_REGISTER,PIN);
 							break;
-			case 'PORT_B':
+			case  PORT_B :
 						SET_BIT(GPIO_PORTB_OUTPUT_REGISTER,PIN);
 							break;
-			case 'PORT_C':
+			case  PORT_C :
 						SET_BIT(GPIO_PORTC_OUTPUT_REGISTER,PIN);
 							break;
-			case 'PORT_D':
+			case  PORT_D :
 						SET_BIT(GPIO_PORTD_OUTPUT_REGISTER,PIN);
 							break;
 		}
@@ -244,16 +278,16 @@ void GPIO_portPullUpInit(const GPIO_PORT PORT)
 
 	switch(PORT)
 		{
-			case 'PORT_A':
+			case  PORT_A :
 						GPIO_PORTA_OUTPUT_REGISTER=0xFF;
 							break;
-			case 'PORT_B':
+			case  PORT_B :
 						GPIO_PORTB_OUTPUT_REGISTER=0xFF;
 							break;
-			case 'PORT_C':
+			case  PORT_C :
 						GPIO_PORTC_OUTPUT_REGISTER=0xFF;
 							break;
-			case 'PORT_D':
+			case  PORT_D :
 						GPIO_PORTD_OUTPUT_REGISTER=0xFF;
 							break;
 		}
@@ -307,16 +341,16 @@ bool GPIO_interruptInit(const GPIO_intConfigStruct* ConfigStructPtr)
 	switch(ConfigStructPtr->INTERRUPT_NUMBER)
 	{
 
-	case 'INTERRUPT_0':
+	case  INTERRUPT_0 :
 						sense_controlOffset=(ConfigStructPtr->INTERRUPT_EDGE_SELECT);
 						break;
 
-	case 'INTERRUPT_1':
+	case  INTERRUPT_1 :
 						sense_controlOffset=(ConfigStructPtr->INTERRUPT_EDGE_SELECT) << 0x02;
 						clear_mask=0x06;
 						break;
 
-	case 'INTERRUPT_2':
+	case  INTERRUPT_2 :
 						sense_controlOffset=(ConfigStructPtr->INTERRUPT_EDGE_SELECT) << 0x06;
 						clear_mask=0x40;
 						break;
