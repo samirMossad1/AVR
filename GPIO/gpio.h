@@ -95,11 +95,11 @@ void GPIO_togglePin(const GPIO_PORT , const GPIO_PIN);
 
 void GPIO_pinPullUpInit(const GPIO_PORT , const GPIO_PIN );
 
-bool GPIO_intInitialize(const GPIO_intConfigStruct*);
+bool GPIO_interruptInit(const GPIO_intConfigStruct*);
 
-bool GPIO_intEnable(const GPIO_INTERRUPT_NUMBER);
+bool GPIO_interruptEnable(const GPIO_INTERRUPT_NUMBER);
 
-bool GPIO_intDisable(const GPIO_INTERRUPT_NUMBER);
+bool GPIO_interruptDisable(const GPIO_INTERRUPT_NUMBER);
 
 
 
