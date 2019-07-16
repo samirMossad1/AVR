@@ -22,6 +22,7 @@
 /** Magical Numbers **/
 
 #define GPIO_INT01_OFFSET			(0X06)
+#define GPIO_INT1_OFFSET			(0X07)
 #define GPIO_INT2_OFFSET			(0X05)
 
 
