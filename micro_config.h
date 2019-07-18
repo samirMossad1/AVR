@@ -102,7 +102,25 @@ typedef enum extinterrupt
 }GPIO_INTERRUPT_NUMBER;
 
 
+typedef enum timers
+{
 
+	TIMER_0,
+	TIMER_1,
+	TIMER_2
+
+
+}TIMER_NUMBER;
+
+
+typedef enum timersChannel
+{
+
+	_CHANNEL_A,
+	_CHANNEL_B,
+	_IGNORE /*in case we used timer0 or timer1 so we don't care about this option*/
+
+}TIMER_CHANNEL;
 
 
 
