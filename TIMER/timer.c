@@ -6,6 +6,33 @@
 
 
 
+bool TIMER_disable(const TIMER_NUMBER TIMER_NUM)
+{
+
+
+	switch(TIMER_NUM)
+		{
+
+		case TIMER_0 : TIMER0_CONTROL_REGISTER &= ~(CLOCK_TIMER_DISABLE_MASK);
+						break;
+
+
+		case TIMER_1 : TIMER1B_CONTROL_REGISTER &= ~(CLOCK_TIMER_DISABLE_MASK);
+						break;
+
+		case TIMER_2 : TIMER2_CONTROL_REGISTER &= ~(CLOCK_TIMER_DISABLE_MASK);
+						break;
+
+		}
+
+
+
+
+	return TRUE;
+}
+
+
+
 uint16_t TIMER_readCount(const TIMER_NUMBER TIMER_NUM)
 {
 

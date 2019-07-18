@@ -79,7 +79,7 @@ bool TIMER_init(const TIMER_ConfigStruct *);
 
 bool TIMER_enable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_PIN,const TIMER_PRESCALAR);
 
-bool TIMER_disable(const TIMER_NUMBER,const TIMER_CHANNEL);
+bool TIMER_disable(const TIMER_NUMBER);
 
 uint16_t TIMER_readCount(const TIMER_NUMBER);
 
