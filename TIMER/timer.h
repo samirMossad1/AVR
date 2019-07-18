@@ -80,7 +80,7 @@ bool TIMER_enable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_PIN,const T
 
 bool TIMER_disable(const TIMER_NUMBER,const TIMER_CHANNEL);
 
-uint16_t TIMER_readCount(const TIMER_NUMBER,const TIMER_CHANNEL);
+uint16_t TIMER_readCount(const TIMER_NUMBER);
 
 uint8_t	 TIMER_readStatus(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 
