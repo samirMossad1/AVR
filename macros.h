@@ -13,7 +13,8 @@
 #ifndef MACROS_H_
 #define MACROS_H_
 
-
+/*Mask all other bits except with the bit of order BIT_NUM*/
+#define MASK_BITS(REG,BIT_NUM) ((REG)=((REG)&(1<<BIT_NUM)))
 
 /*Check if specific bit is set in any register*/
 #define BIT_IS_SET(REG,BIT_NUM) ((REG)&(1<<BIT_NUM))
