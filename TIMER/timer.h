@@ -68,8 +68,9 @@ typedef struct timer_configStruct
 	TIMER_MODE  		TIMER_MODE;
 	TIMER_OUTPUT_TYPES	TIMER_OUT; 	 /*use the ignore option in case of normal mode*/
 	TIMER_INTERRUPT 	TIMER_INT;
-
+	void (* CallBack_ptr)(void);	/*in case of No interrupts, set this pointer to NULL_PTR*/
 }TIMER_ConfigStruct;
+
 
 
 
@@ -84,9 +85,7 @@ uint16_t TIMER_readCount(const TIMER_NUMBER);
 
 uint8_t	 TIMER_readStatus(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 
-bool TIMER_interruptEnable(const TIMER_NUMBER ,const TIMER_CHANNEL, void(*)(void));
-
-bool TIMER_interruptDisable(const TIMER_NUMBER,const TIMER_CHANNEL);
+bool TIMER_interruptDisable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 
 
 
