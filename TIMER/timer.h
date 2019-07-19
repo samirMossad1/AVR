@@ -115,9 +115,9 @@ void TIMER_COMPARE_setValue(const TIMER_NUMBER ,const TIMER_CHANNEL,const uint16
 
 void TIMER_PWM_setDutyCycle(const TIMER_NUMBER,const uint16_t);
 
-void TIMER_ICU_setEdge(const TIMER_NUMBER,const TIMER_ICU_EDGE);
+void TIMER1_ICU_setEdge(const TIMER_ICU_EDGE);
 
-uint16_t TIMER_ICU_readCaptureReg(const TIMER_NUMBER);
+uint16_t TIMER1_ICU_readCaptureReg();
 
 bool TIMER_interruptDisable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 
