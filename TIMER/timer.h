@@ -13,14 +13,16 @@ typedef enum
 {
 	_NORMAL_MODE, /*Overflow Mode*/
 	_CTC_MODE,
-	_PWM_MODE
+	_PWM_MODE,
+	_ICU_MODE
 
 }TIMER_MODE;
 
 typedef enum
 {
 	_OVERFLOW,
-	_COMPARE
+	_COMPARE,
+	_INPUT_CAPTURE
 
 
 }TIMER_FLAG;
@@ -48,7 +50,7 @@ typedef enum
 	_OUTPUT_COMPARE_TOGGLE, /*Only in CTC mode*/
 	_OUTPUT_COMPARE_CLEAR,
 	_OUTPUT_COMPARE_SET,
-	__IGNORE
+	_IGNORE_TYPE
 
 
 }TIMER_OUTPUT_TYPES;
@@ -60,6 +62,27 @@ typedef enum
 
 }TIMER_INTERRUPT;
 
+typedef enum
+{
+
+	_NON_INVERTING,
+	_INVERTING,
+	_IGNORE_EDGE
+
+
+}TIMER_PWM_SIGNAL;
+
+typedef enum
+{
+	_FALLING_EDGE,
+	_RISING_EGDE
+
+}TIMER_ICU_EDGE;
+
+
+
+
+
 typedef struct timer_configStruct
 {
 
@@ -69,7 +92,9 @@ typedef struct timer_configStruct
 	TIMER_OUTPUT_TYPES	TIMER_OUT; 	 /*use the ignore option in case of normal mode*/
 	TIMER_INTERRUPT 	TIMER_INT;
 	TIMER_PINS			TIMER_PIN;
-	void (* CallBack_ptr)(void);	/*in case of No interrupts, set this pointer to NULL_PTR*/
+	TIMER_PWM_SIGNAL	TIMER_PWM;   /*use the ignore option in case of NON pwm mode*/
+	void (* CallBack_ptr)(void);	 /*in case of No interrupts, set this pointer to NULL_PTR*/
+
 }TIMER_ConfigStruct;
 
 
@@ -78,13 +103,21 @@ typedef struct timer_configStruct
 
 bool TIMER_init(const TIMER_ConfigStruct *);
 
-bool TIMER_enable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_PRESCALAR);
+bool TIMER_enable(const TIMER_NUMBER,const TIMER_PRESCALAR); /*Use this function to enable any timer for OVERFLOW/ICU mode*/
 
 bool TIMER_disable(const TIMER_NUMBER);
 
 uint16_t TIMER_readCount(const TIMER_NUMBER);
 
 uint8_t	 TIMER_readStatus(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
+
+void TIMER_COMPARE_setValue(const TIMER_NUMBER ,const TIMER_CHANNEL,const uint16_t);
+
+void TIMER_PWM_setDutyCycle(const TIMER_NUMBER,const uint16_t);
+
+void TIMER_ICU_setEdge(const TIMER_NUMBER,const TIMER_ICU_EDGE);
+
+uint16_t TIMER_ICU_readCaptureReg(const TIMER_NUMBER);
 
 bool TIMER_interruptDisable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 
