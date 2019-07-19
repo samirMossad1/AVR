@@ -148,7 +148,7 @@ bool TIMER_interruptDisable(const TIMER_NUMBER TIMER_NUMBER,const TIMER_CHANNEL 
 		else
 		{
 			if(TIMER_CHAN == _CHANNEL_A)  RESET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER1A_COMPARE_FLAG);
-						else			  RESET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER1B_COMPARE_FLAG);
+			else			  RESET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER1B_COMPARE_FLAG);
 
 
 		}
@@ -167,23 +167,31 @@ bool TIMER_interruptDisable(const TIMER_NUMBER TIMER_NUMBER,const TIMER_CHANNEL 
 }
 
 
-void TIMER_COMPARE_setValue(const TIMER_NUMBER TIMER_NUMBER ,const TIMER_CHANNEL TIMER_CHANNEL,const uint16_t compareValue)
-{
 
-	switch(TIMER_NUMBER)
+
+void TIMER_COMPARE_setValue(const TIMER_NUMBER TIMER_NUMBER ,const TIMER_CHANNEL TIMER_CHANNEL,const TIMER_MODE TIMER_MODE,const uint16_t compareValue)
+{
+	uint16_t modifiedValue;
+
+	if(TIMER_NUMBER == TIMER_1)
 	{
 
-	case TIMER_0:	TIMER0_COMPARE_REGISTER= compareValue & 0x00FF;
-					break;
+		if(TIMER_MODE == _PWM_MODE)				modifiedValue= (compareValue*65535)/100;
+		else									modifiedValue= compareValue;
 
-	case TIMER_1:  if(TIMER_CHANNEL == _CHANNEL_A) 			   TIMER1A_COMPARE_REGISTER= compareValue;
-				   else if(TIMER_CHANNEL == _CHANNEL_B)		   TIMER1B_COMPARE_REGISTER= compareValue;
-					break;
-
-	case TIMER_2:  	TIMER2_COMPARE_REGISTER= compareValue & 0x00FF;
-					break;
-
+		if(TIMER_CHANNEL == _CHANNEL_A)			TIMER1A_COMPARE_REGISTER=modifiedValue;
+		else if(TIMER_CHANNEL == _CHANNEL_B)	TIMER1B_COMPARE_REGISTER=modifiedValue;
 	}
+	else
+	{
+
+		if(TIMER_MODE == _CTC_MODE)  		modifiedValue= compareValue & 0x00FF;
+		else if(TIMER_MODE == _PWM_MODE)	modifiedValue = (compareValue*255)/100;
+
+		if(TIMER_NUMBER== TIMER_0)			TIMER0_COMPARE_REGISTER= modifiedValue;
+		else 								TIMER2_COMPARE_REGISTER= modifiedValue;
+	}
+
 
 }
 
