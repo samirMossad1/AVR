@@ -89,6 +89,7 @@
 #define TIMER1_OVERFLOW_FLAG		0x02
 #define TIMER1B_COMPARE_FLAG		0x03
 #define TIMER1A_COMPARE_FLAG		0x04
+#define TIMER1_INPUT_CAPTURE_FLAG	0X05
 #define TIMER2_OVERFLOW_FLAG		0x06
 #define TIMER2_COMPARE_FLAG			0x07
 
@@ -143,7 +144,7 @@ typedef enum timersChannel
 
 	_CHANNEL_A,
 	_CHANNEL_B,
-	_IGNORE /*in case we used timer0 or timer1 so we don't care about this option*/
+	_IGNORE_CHANNEL /*in case we used timer0 or timer1 so we don't care about this option*/
 
 }TIMER_CHANNEL;
 
