@@ -14,7 +14,7 @@
 #define MACROS_H_
 
 /*Clear all the bits to the corresponding  1s in the number N  then OR it with the Number Num*/
-#define CLEAR_N_BITS_THEN_OR(REG,N,NUM)  (  (REG)=( ( REG & ~(N) ) | (NUM) ) )
+#define CLEAR_N_BITS_THEN_OR(REG,N,NUM,SHIFT)  (  (REG)=( ( REG & ~(N) ) | (NUM<<SHIFT) ) )
 
 
 /*Mask all other bits except with the bit of order BIT_NUM*/
