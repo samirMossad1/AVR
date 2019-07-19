@@ -111,9 +111,7 @@ uint16_t TIMER_readCount(const TIMER_NUMBER);
 
 uint8_t	 TIMER_readStatus(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 
-void TIMER_COMPARE_setValue(const TIMER_NUMBER ,const TIMER_CHANNEL,const uint16_t);
-
-void TIMER_PWM_setDutyCycle(const TIMER_NUMBER,const uint16_t);
+void TIMER_COMPARE_setValue(const TIMER_NUMBER ,const TIMER_CHANNEL,const TIMER_MODE,const uint16_t);
 
 void TIMER1_ICU_setEdge(const TIMER_ICU_EDGE);
 
