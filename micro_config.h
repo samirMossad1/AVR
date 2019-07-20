@@ -157,4 +157,24 @@ typedef enum timerComparepins
 }TIMER_OUTPUT_COMPARE_PIN;
 
 
+
+
+typedef enum adc_channels
+{
+
+	_ADC0,
+	_ADC1,
+	_ADC2,
+	_ADC3,
+	_ADC4,
+	_ADC5,
+	_ADC6,
+	_ADC7
+
+}ADC_CHANNEL;
+
+
+
+
+
 #endif
