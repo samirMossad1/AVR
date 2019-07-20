@@ -79,9 +79,9 @@ typedef struct adc_configstruct
 
 bool ADC_init(const ADC_ConfigStruct*);
 
-uint16_t ADC_convert(const ADC_CHANNEL);   /*Use this conversion function in case of _NO_INTERRUPTS*/
+uint16_t ADC_readChannel(const ADC_CHANNEL);   /*Use this conversion function in case of _NO_INTERRUPTS*/
 
-void ADC_convert(const ADC_CHANNEL,void(*)(void));  /*Use this conversion function in case of _INTERRUPTS*/
+void ADC_readChannelInterrupt(const ADC_CHANNEL,void(*)(void));  /*Use this conversion function in case of _INTERRUPTS*/
 
 bool ADC_disable();
 
