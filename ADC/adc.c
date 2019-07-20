@@ -30,6 +30,7 @@ bool ADC_init(const ADC_ConfigStruct* ADC_structPtr)
 	ADC_DATA_REGISTER=0X00;
 
 
+
 	ADC_MULTIPLEXER_SEL_REGISTER|=(ADC_structPtr->ADC_VOLTAGE)<<BIT_6;
 	ADC_CONTROL_STATUS_REGISTER|=(ADC_structPtr->ADC_SCALAR)|((ADC_structPtr->ADC_MODE)<<BIT_3);
 
@@ -77,6 +78,12 @@ void ADC_readChannelInterrupt(const ADC_CHANNEL ADC_CHANNEL,void(*callBackPtr)(v
 
 	SET_BIT(ADC_CONTROL_STATUS_REGISTER,ADC_START_CONVERSION);
 
+}
+
+
+uint16_t ADC_readDataRegister()
+{
+	return ADC_DATA_REGISTER;
 }
 
 
