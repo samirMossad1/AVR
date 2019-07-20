@@ -83,5 +83,6 @@ uint16_t ADC_convert(const ADC_CHANNEL);   /*Use this conversion function in cas
 
 void ADC_convert(const ADC_CHANNEL,void(*)(void));  /*Use this conversion function in case of _INTERRUPTS*/
 
+bool ADC_disable();
 
 #endif
