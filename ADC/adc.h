@@ -16,7 +16,7 @@ typedef enum adc_refVolt
 {
 	_AREF,
 	_AVCC,
-	_INTERNAL=3
+	_INTERNAL_VOLTAGE=3
 
 }ADC_REFERENCE_VOLATGE;
 
@@ -82,6 +82,8 @@ bool ADC_init(const ADC_ConfigStruct*);
 uint16_t ADC_readChannel(const ADC_CHANNEL);   /*Use this conversion function in case of _NO_INTERRUPTS*/
 
 void ADC_readChannelInterrupt(const ADC_CHANNEL,void(*)(void));  /*Use this conversion function in case of _INTERRUPTS*/
+
+uint16_t ADC_readDataRegister();
 
 bool ADC_disable();
 
