@@ -32,6 +32,7 @@
 #define BIT_5						(0X5)
 #define BIT_6						(0X6)
 #define BIT_7						(0X7)
+#define BIT_8						(0X8)
 
 
 
@@ -137,8 +138,23 @@
 
 
 
+/*USART FLAGS*/
+
+#define USART_RECEIVE_COMPLETE_FLAG				BIT_7
+#define USART_TRANSMIT_COMPLETE_FLAG			BIT_6
+#define USART_DATA_REGISTER_EMPTY_FLAG			BIT_5
 
 
+/*USART MASKS*/
+
+#define USART_DISABLE_MASK					0XF8
+#define USART_CONTROL_REG_A_CLEAR			0X20
+
+/*USART BITS*/
+#define USART_REGISTER_SELECT				BIT_7
+#define USART_MODE_SELECT					BIT_6
+#define USART_TRANSMITER_ENABLE				BIT_3
+#define USART_RECEIVER_ENABLE				BIT_4
 
 
 
