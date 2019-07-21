@@ -20,9 +20,9 @@
 
 /*Needed Includes*/
 
-#include "macros.h"
-#include "micro_config.h"
-#include "std_types.h"
+#include "../macros.h"
+#include "../micro_config.h"
+#include "../std_types.h"
 
 
 
