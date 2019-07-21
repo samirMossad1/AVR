@@ -15,9 +15,9 @@
 #define WATCHDOG_H_
 
 
-#include "micro_config.h"
-#include "macros.h"
-#include "std_types.h"
+#include "../micro_config.h"
+#include "../macros.h"
+#include "../std_types.h"
 
 #define VCC 5
 
