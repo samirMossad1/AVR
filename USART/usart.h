@@ -95,7 +95,7 @@ typedef struct usart_configstruct
 
 
 
-bool USART_init(const USART_ConfigStruct);
+bool USART_init(const USART_ConfigStruct*);
 
 uint8_t USART_receiveByte();
 
