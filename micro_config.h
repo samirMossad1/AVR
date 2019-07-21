@@ -122,6 +122,27 @@
 #define ADC_DATA_HIGH_CLEAR				0X03
 
 
+
+
+
+/*USART REGISTERS*/
+
+#define USART_DATA_REGISTER					UDR
+#define USART_CONTROL_STATUS_A_REGISTER		UCSRA
+#define USART_CONTROL_STATUS_B_REGISTER		UCSRB
+#define USART_CONTROL_STATUS_C_REGISTER		UCSRC
+#define USART_BAUD_RATE_REGISTER			UBRR
+#define USART_BAUD_RATE_HIGH_REGISTER		UBRRH
+#define USART_BAUD_RATE_LOW_REGISTER		UBRRL
+
+
+
+
+
+
+
+
+
 /** Enums which are related to the micro controller arch. **/
 
 typedef enum port
