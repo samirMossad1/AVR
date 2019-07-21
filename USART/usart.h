@@ -4,9 +4,9 @@
 
 
 
-#include "../micro_config.h"
-#include "../macros.h"
-#include "../std_types.h"
+#include "micro_config.h"
+#include "macros.h"
+#include "std_types.h"
 
 
 
@@ -97,9 +97,9 @@ typedef struct usart_configstruct
 
 bool USART_init(const USART_ConfigStruct);
 
-uint8_t USART_readByte();
+uint8_t USART_receiveByte();
 
-void USART_readString(char *);
+void USART_receiveString(char *);
 
 void USART_sendByte(const uint8_t);
 
