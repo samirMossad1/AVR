@@ -172,6 +172,49 @@ void USART_sendString(const char* string)
 }
 
 
+void USART_setCallBack(const USART_INTERRUPT_TYPE INTERRUPT_TYPE,void(*callBackPtr)(void))
+{
+
+
+	switch(INTERRUPT_TYPE)
+	{
+
+	case _TRANSMITTER_INTERRUPT :	USART_callBackPtrs[0]=callBackPtr;
+									break;
+
+	case _RECEIVER_INTERRUPT :		USART_callBackPtrs[1]=callBackPtr;
+									break;
+
+	case _DATA_REG_INTERRUPT :		USART_callBackPtrs[2]=callBackPtr;
+									break;
+
+	}
+
+
+}
+
+bool USART_disableInterrupt(const USART_INTERRUPT_TYPE INTERRUPT_TYPE)
+{
+
+	switch(INTERRUPT_TYPE)
+	{
+
+	case _TRANSMITTER_INTERRUPT :	RESET_BIT(USART_CONTROL_STATUS_B_REGISTER,BIT_6);
+									break;
+
+	case _RECEIVER_INTERRUPT :		RESET_BIT(USART_CONTROL_STATUS_B_REGISTER,BIT_7);
+									break;
+
+	case _DATA_REG_INTERRUPT :		RESET_BIT(USART_CONTROL_STATUS_B_REGISTER,BIT_5);
+									break;
+
+	}
+
+	return TRUE;
+
+}
+
+
 
 bool USART_disable()
 {

@@ -17,6 +17,18 @@ typedef enum
 }USART_TRANSMISSION_SPEED;
 
 
+
+typedef enum
+{
+
+	_TRANSMITTER_INTERRUPT,
+	_RECEIVER_INTERRUPT,
+	_DATA_REG_INTERRUPT
+
+
+}USART_INTERRUPT_TYPE;
+
+
 typedef enum
 {
 
@@ -119,9 +131,9 @@ void USART_sendByte(const uint8_t);
 
 void USART_sendString(const char*);
 
-void USART_setCallBack(const INTERRUPT_TYPE,void(*)(void));
+void USART_setCallBack(const USART_INTERRUPT_TYPE,void(*)(void));
 
-bool USART_disableInterrupt(const INTERRUPT_TYPE);
+bool USART_disableInterrupt(const USART_INTERRUPT_TYPE);
 
 bool USART_disable();
 
