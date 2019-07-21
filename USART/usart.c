@@ -48,7 +48,7 @@ bool USART_init(const USART_ConfigStruct* USART_structPtr)
 	if(USART_structPtr == NULL_PTR) return FALSE;
 
 
-	 /*Clear Registers*/
+	/*Clear Registers*/
 
 	USART_CONTROL_STATUS_A_REGISTER&=USART_CONTROL_REG_A_CLEAR;
 	USART_CONTROL_STATUS_B_REGISTER=0X00;
@@ -67,9 +67,9 @@ bool USART_init(const USART_ConfigStruct* USART_structPtr)
 	SET_BIT(USART_CONTROL_STATUS_C_REGISTER,USART_REGISTER_SELECT);
 
 	USART_CONTROL_STATUS_C_REGISTER |= ((USART_structPtr->USART_MODE) << BIT_6) |
-									   ((USART_structPtr->USART_PARITY)<< BIT_4)|
-									   ((USART_structPtr->USART_STOP) << BIT_3) |
-									   (((USART_structPtr->USART_CS)&0x03)<<BIT_1);
+			((USART_structPtr->USART_PARITY)<< BIT_4)|
+			((USART_structPtr->USART_STOP) << BIT_3) |
+			(((USART_structPtr->USART_CS)&0x03)<<BIT_1);
 
 
 
@@ -102,15 +102,15 @@ bool USART_init(const USART_ConfigStruct* USART_structPtr)
 	/*INTERRUPTS*/
 
 	USART_CONTROL_STATUS_B_REGISTER|=((USART_structPtr->USART_REC_INT)<<BIT_7)|
-									 ((USART_structPtr->USART_TRANS_INT)<<BIT_6)|
-									 ((USART_structPtr->USART_DATA_REG_INT)<<BIT_5);
+			((USART_structPtr->USART_TRANS_INT)<<BIT_6)|
+			((USART_structPtr->USART_DATA_REG_INT)<<BIT_5);
 
 
 
 
 
 
-return TRUE;
+	return TRUE;
 }
 
 
@@ -120,9 +120,9 @@ return TRUE;
 uint8_t USART_receiveByte()
 {
 
-  while(BIT_IS_CLEAR(USART_CONTROL_STATUS_A_REGISTER,USART_RECEIVE_COMPLETE_FLAG));
+	while(BIT_IS_CLEAR(USART_CONTROL_STATUS_A_REGISTER,USART_RECEIVE_COMPLETE_FLAG));
 
-  return USART_DATA_REGISTER ;
+	return USART_DATA_REGISTER ;
 
 }
 
@@ -147,7 +147,7 @@ void USART_receiveString(char * string)
 	do{
 
 		string[i]=USART_receiveByte();
-	    i++;
+		i++;
 
 	}while(string[i-1] != '#');
 
@@ -175,7 +175,7 @@ void USART_sendString(const char* string)
 	}
 
 
- /*We will mark the end of the string with '#' and this character will be checked upon in the receive string function*/
+	/*We will mark the end of the string with '#' and this character will be checked upon in the receive string function*/
 
 }
 
@@ -193,13 +193,13 @@ void USART_setCallBack(const USART_INTERRUPT_TYPE INTERRUPT_TYPE,void(*callBackP
 	{
 
 	case _TRANSMITTER_INTERRUPT :	USART_callBackPtrs[1]=callBackPtr;
-									break;
+	break;
 
 	case _RECEIVER_INTERRUPT :		USART_callBackPtrs[0]=callBackPtr;
-									break;
+	break;
 
 	case _DATA_REG_INTERRUPT :		USART_callBackPtrs[2]=callBackPtr;
-									break;
+	break;
 
 	}
 
@@ -213,13 +213,13 @@ bool USART_disableInterrupt(const USART_INTERRUPT_TYPE INTERRUPT_TYPE)
 	{
 
 	case _TRANSMITTER_INTERRUPT :	RESET_BIT(USART_CONTROL_STATUS_B_REGISTER,BIT_6);
-									break;
+	break;
 
 	case _RECEIVER_INTERRUPT :		RESET_BIT(USART_CONTROL_STATUS_B_REGISTER,BIT_7);
-									break;
+	break;
 
 	case _DATA_REG_INTERRUPT :		RESET_BIT(USART_CONTROL_STATUS_B_REGISTER,BIT_5);
-									break;
+	break;
 
 	}
 
