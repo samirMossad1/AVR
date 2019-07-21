@@ -67,7 +67,7 @@ uint16_t ADC_readChannel(const ADC_CHANNEL ADC_CHANNEL)
 
 
 
-void ADC_readChannelInterrupt(const ADC_CHANNEL ADC_CHANNEL,void(*callBackPtr)(void))  /*Use this conversion function in case of _INTERRUPTS*/
+void ADC_readChannelInterrupt(const ADC_CHANNEL ADC_CHANNEL,void(*callBackPtr)(void))  
 {
 
 	if(callBackPtr == NULL_PTR) return;
