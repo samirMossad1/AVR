@@ -37,7 +37,73 @@ ISR(USART_UDRE_vect)
 
 
 
+bool USART_init(const USART_ConfigStruct* USART_structPtr)
+{
+	uint16_t baud_rate_number;
+	uint8_t baud_rate_constant_factor;
 
+	if(USART_structPtr == NULL_PTR) return FALSE;
+
+
+	 /*Clear Registers*/
+
+	USART_CONTROL_STATUS_A_REGISTER&=USART_CONTROL_REG_A_CLEAR;
+	USART_CONTROL_STATUS_B_REGISTER=0X00;
+	USART_CONTROL_STATUS_C_REGISTER=0X00;
+
+
+
+
+
+	SET_BIT(USART_CONTROL_STATUS_B_REGISTER,USART_TRANSMITER_ENABLE);
+	SET_BIT(USART_CONTROL_STATUS_B_REGISTER,USART_RECEIVER_ENABLE);
+	USART_CONTROL_STATUS_B_REGISTER|=((USART_structPtr->USART_CS)&0x04);
+
+
+	SET_BIT(USART_CONTROL_STATUS_C_REGISTER,USART_REGISTER_SELECT);
+
+	USART_CONTROL_STATUS_C_REGISTER |= ((USART_structPtr->USART_MODE) << BIT_6) |
+									   ((USART_structPtr->USART_PARITY)<< BIT_4)|
+									   ((USART_structPtr->USART_STOP) << BIT_3) |
+									   (((USART_structPtr->USART_CS)&0x03)<<BIT_1);
+
+	if(USART_structPtr->USART_MODE == _ASYNCHRONOUS)
+	{
+
+		USART_CONTROL_STATUS_A_REGISTER|=((USART_structPtr->USART_SPEED)<< BIT_1);
+
+		if(USART_structPtr->USART_SPEED == _NORMAL_SPEED ) baud_rate_constant_factor=16;
+		else											   baud_rate_constant_factor=8;
+
+	}
+	else
+	{
+		USART_CONTROL_STATUS_C_REGISTER|=(USART_structPtr->USART_CLOCK);
+		baud_rate_constant_factor=0x02;
+	}
+
+
+
+	RESET_BIT(USART_CONTROL_STATUS_C_REGISTER,USART_REGISTER_SELECT);
+
+
+	/*BAUD RATE*/
+
+	baud_rate_number=((USART_structPtr->Freq_CPU)/(baud_rate_constant_factor*USART_structPtr->USART_baudRate))-1;
+	USART_BAUD_RATE_HIGH_REGISTER=baud_rate_number>>BIT_8;
+	USART_BAUD_RATE_LOW_REGISTER=baud_rate_number;
+
+
+	/*INTERRUPTS*/
+
+	USART_CONTROL_STATUS_B_REGISTER|=((USART_structPtr->USART_REC_INT)<<BIT_7)|
+									 ((USART_structPtr->USART_TRANS_INT)<<BIT_6)|
+									 ((USART_structPtr->USART_DATA_REG_INT)<<BIT_5);
+
+
+
+	return TRUE;
+}
 
 
 
