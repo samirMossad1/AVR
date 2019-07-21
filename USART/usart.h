@@ -8,6 +8,7 @@
 #include "macros.h"
 #include "std_types.h"
 
+#define USART_BAUDRATE 9600
 
 typedef enum
 {
@@ -32,24 +33,24 @@ typedef enum
 typedef enum
 {
 
-	_TRANSMITTER_INTERRUPT_ON,
-	_TRANSMITTER_INTERRUPT_OFF
+	_TRANSMITTER_INTERRUPT_OFF,
+	_TRANSMITTER_INTERRUPT_ON
 
 }USART_TRANSMITTER_INTERRUPT;
 
 
 typedef enum
 {
-	_RECEIVER_INTERRUPT_ON,
-	_RECEIVER_INTERRUPT_OFF
+	_RECEIVER_INTERRUPT_OFF,
+	_RECEIVER_INTERRUPT_ON
 
 }USART_RECEIVER_INTERRUPT;
 
 typedef enum
 {
 
-	_DATA_REGISTER_INTERRUPT_ON,
-	_DATA_REGISTER_INTERRUPT_OFF
+	_DATA_REGISTER_INTERRUPT_OFF,
+	_DATA_REGISTER_INTERRUPT_ON
 
 }USART_DATA_REGISTER_INTERRUPT;
 
@@ -72,8 +73,8 @@ typedef enum
 
 typedef enum
 {
-	_1_BIT,
-	_2_BITS
+	_1_STOP_BIT,
+	_2_STOP_BITS
 
 }USART_STOPBIT;
 
@@ -110,8 +111,8 @@ typedef struct usart_configstruct
 	USART_RECEIVER_INTERRUPT		USART_REC_INT;
 	USART_DATA_REGISTER_INTERRUPT 	USART_DATA_REG_INT;
 	USART_MODE						USART_MODE;
-	uint16_t 						USART_baudRate;
-	uint16_t                    	Freq_CPU;
+	uint32_t 						USART_baudRate;
+	uint32_t                    	Freq_CPU;
 
 }USART_ConfigStruct;
 
@@ -122,6 +123,8 @@ typedef struct usart_configstruct
 
 
 bool USART_init(const USART_ConfigStruct*);
+
+uint8_t USART_readDataReg();
 
 uint8_t USART_receiveByte();
 
