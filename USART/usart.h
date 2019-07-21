@@ -4,9 +4,9 @@
 
 
 
-#include "micro_config.h"
-#include "macros.h"
-#include "std_types.h"
+#include "../micro_config.h"
+#include "../macros.h"
+#include "../std_types.h"
 
 
 typedef enum
@@ -102,16 +102,16 @@ typedef struct usart_configstruct
 {
 
 	USART_CHARACTER_SIZE 			USART_CS;
-	USART_PARITY		 			USART_PARITY;
-	USART_STOPBIT					USART_STOP;
+	USART_PARITY		 		USART_PARITY;
+	USART_STOPBIT				USART_STOP;
 	USART_CLOCK_POLARITY			USART_CLOCK;
 	USART_TRANSMISSION_SPEED		USART_SPEED;
-	USART_TRANSMITTER_INTERRUPT 	USART_TRANS_INT;
+	USART_TRANSMITTER_INTERRUPT 		USART_TRANS_INT;
 	USART_RECEIVER_INTERRUPT		USART_REC_INT;
-	USART_DATA_REGISTER_INTERRUPT 	USART_DATA_REG_INT;
-	USART_MODE						USART_MODE;
-	uint16_t 						USART_baudRate;
-	uint16_t                    	Freq_CPU;
+	USART_DATA_REGISTER_INTERRUPT 		USART_DATA_REG_INT;
+	USART_MODE				USART_MODE;
+	uint16_t 				USART_baudRate;
+	uint16_t                    		Freq_CPU;
 
 }USART_ConfigStruct;
 
