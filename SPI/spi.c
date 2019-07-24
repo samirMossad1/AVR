@@ -30,11 +30,11 @@ bool SPI_deviceInit(const SPI_ConfigStruct * SPI_structPtr)
 
 
 	SPI_CONTROL_REGISTER|= ( (SPI_structPtr->SPI_INT)<<BIT_7)|
-						   ( (SPI_structPtr->SPI_DEVICE_TYPE)<<BIT_4)|
-						   ( (SPI_structPtr->SPI_CLCK_PHASE)<<BIT_2)|
-						   ( (SPI_structPtr->SPI_CLCK_POLARITY)<<BIT_3)|
-						   ( (SPI_structPtr->SPI_DATA_ORDER)<<BIT_5)|
-						   ( (SPI_structPtr->SPI_FREQ_PRE));
+			       ( (SPI_structPtr->SPI_DEVICE_TYPE)<<BIT_4)|
+			       ( (SPI_structPtr->SPI_CLCK_PHASE)<<BIT_2)|
+			       ( (SPI_structPtr->SPI_CLCK_POLARITY)<<BIT_3)|
+	      		       ( (SPI_structPtr->SPI_DATA_ORDER)<<BIT_5)|
+			       ( (SPI_structPtr->SPI_FREQ_PRE));
 
 
 
