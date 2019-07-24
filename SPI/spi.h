@@ -18,8 +18,8 @@
 typedef enum spi_device
 {
 
-	_SLAVE,
-	_MASTER
+	_SPI_SLAVE,
+	_SPI_MASTER
 
 }SPI_DEVICE;
 

@@ -38,9 +38,9 @@ bool SPI_deviceInit(const SPI_ConfigStruct * SPI_structPtr)
 			       ( (SPI_structPtr->SPI_FREQ_PRE));
 
 
-	if(SPI_structPtr->SPI_DEVICE_TYPE == _MASTER)
+	if(SPI_structPtr->SPI_DEVICE_TYPE == _SPI_MASTER)
 	{
-		SET_BIT(SPI_CONTROL_REGISTER,SPI_MASTER);
+	SET_BIT(SPI_CONTROL_REGISTER,SPI_MASTER);
 		SPI_masterGPIOInit();
 	}
 	else
@@ -49,8 +49,8 @@ bool SPI_deviceInit(const SPI_ConfigStruct * SPI_structPtr)
 		SPI_slaveGPIOInit();
 	}
 
-
 	SPI_STATUS_REGISTER|=(SPI_structPtr->SPI_SPEED);
+
 
 	SET_BIT(SPI_CONTROL_REGISTER,SPI_ENABLE);
 
@@ -88,9 +88,10 @@ do
 void SPI_sendByte(uint8_t data)
 {
 
-	while(BIT_IS_CLEAR(SPI_STATUS_REGISTER,SPI_INTERRUPT_FLAG));
 
 	SPI_DATA_REGISTER=data;
+
+	while(BIT_IS_CLEAR(SPI_STATUS_REGISTER,SPI_INTERRUPT_FLAG));
 
 }
 
