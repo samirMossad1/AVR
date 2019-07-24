@@ -25,9 +25,37 @@ ISR(SPI_STC_vect)
 }
 
 
+uint8_t SPI_readByte()
+{
+
+	while(BIT_IS_CLEAR(SPI_STATUS_REGISTER,SPI_INTERRUPT_FLAG));
+
+	return SPI_DATA_REGISTER;
+
+}
+
+
+void SPI_readString(char * str)
+{
+	uint16_t i=0;
+
+do{
+	str[i]=SPI_readByte();
+	i++;
+
+	} while(str[i-1] != '\0');
+
+
+}
+
+
+
+
+
+
 uint8_t SPI_readStatus()
 {
-		return SPI_STATUS_REGISTER>>7;
+	return SPI_STATUS_REGISTER>>7;
 }
 
 
