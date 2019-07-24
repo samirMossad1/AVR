@@ -72,12 +72,15 @@ void SPI_readString(char * str)
 {
 	uint16_t i=0;
 
-do{
+do
+{
 	str[i]=SPI_readByte();
+
 	i++;
 
-	} while(str[i-1] != '\0');
+}while(str[i-1]!='#');
 
+	str[i-1]='\0';
 
 }
 
