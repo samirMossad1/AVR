@@ -49,8 +49,28 @@ do{
 }
 
 
+void SPI_sendByte(uint8_t data)
+{
+
+	while(BIT_IS_CLEAR(SPI_STATUS_REGISTER,SPI_INTERRUPT_FLAG));
+
+	SPI_DATA_REGISTER=data;
+
+}
+
+void SPI_sendString(const char * str)
+{
+	uint16_t i=0;
+
+	do
+	{
+		SPI_sendByte(str[i]);
+		i++;
+
+	}while(str[i-1] != '\0');
 
 
+}
 
 
 uint8_t SPI_readStatus()
