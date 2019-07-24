@@ -158,6 +158,24 @@
 
 
 
+/*SPI REGISTERS*/
+
+#define SPI_CONTROL_REGISTER			SPCR
+#define SPI_STATUS_REGISTER			SPSR
+#define SPI_DATA_REGISTER				SPDR
+
+/*SPI FLAGS*/
+#define SPI_INTERRUPT_FLAG				BIT_7
+#define SPI_WRITE_COLLISION_FLAG		BIT_6
+
+/*SPI BITS*/
+
+#define SPI_INTERRUPT_ENABLE			BIT_7
+#define SPI_ENABLE						BIT_6
+
+/*SPI MASKS*/
+#define CLEAR_TRANSMISSION_SPEED_MASK    (0x01)
+
 
 /** Enums which are related to the micro controller arch. **/
 
