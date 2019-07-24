@@ -105,6 +105,8 @@ void SPI_sendByte(uint8_t);
 
 void SPI_sendString(const char *);
 
+uint8_t SPI_readStatus();
+
 bool SPI_disable();
 
 void SPI_setCallBack(void(*)(void));
