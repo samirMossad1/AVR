@@ -8,13 +8,6 @@ static void (*SPI_callBackPtr)(void)=NULL_PTR;
 
 
 
-
-
-
-
-
-
-
 ISR(SPI_STC_vect)
 {
 	if(SPI_callBackPtr!=NULL_PTR)
@@ -22,6 +15,35 @@ ISR(SPI_STC_vect)
 
 	SET_BIT(SPI_STATUS_REGISTER,SPI_INTERRUPT_FLAG);
 
+}
+
+
+bool SPI_deviceInit(const SPI_ConfigStruct * SPI_structPtr)
+{
+
+	if(SPI_structPtr == NULL_PTR ) 	return FALSE;
+
+	/*CLEAR REGISTERS*/
+	SPI_CONTROL_REGISTER=0x00;
+	SPI_STATUS_REGISTER&=~(CLEAR_TRANSMISSION_SPEED_MASK);
+
+
+
+	SPI_CONTROL_REGISTER|= ( (SPI_structPtr->SPI_INT)<<BIT_7)|
+						   ( (SPI_structPtr->SPI_DEVICE_TYPE)<<BIT_4)|
+						   ( (SPI_structPtr->SPI_CLCK_PHASE)<<BIT_2)|
+						   ( (SPI_structPtr->SPI_CLCK_POLARITY)<<BIT_3)|
+						   ( (SPI_structPtr->SPI_DATA_ORDER)<<BIT_5)|
+						   ( (SPI_structPtr->SPI_FREQ_PRE));
+
+
+
+	SPI_STATUS_REGISTER|=(SPI_structPtr->SPI_SPEED);
+
+
+	SET_BIT(SPI_CONTROL_REGISTER,SPI_ENABLE);
+
+	return TRUE;
 }
 
 
