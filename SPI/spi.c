@@ -116,6 +116,17 @@ void SPI_setCallBack(void(*callBackPtr)(void))
 
 
 
+bool SPI_checkCollision()
+{
+
+	if(BIT_IS_SET(SPI_STATUS_REGISTER,SPI_WRITE_COLLISION_FLAG))
+		return TRUE;
+	else
+		return FALSE;
+
+}
+
+
 bool SPI_disableInterrupt()
 {
 	RESET_BIT(SPI_CONTROL_REGISTER,SPI_INTERRUPT_ENABLE);

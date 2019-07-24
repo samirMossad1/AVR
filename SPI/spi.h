@@ -107,6 +107,8 @@ void SPI_sendString(const char *);
 
 uint8_t SPI_readStatus();
 
+bool SPI_checkCollision();
+
 bool SPI_disable();
 
 void SPI_setCallBack(void(*)(void));
