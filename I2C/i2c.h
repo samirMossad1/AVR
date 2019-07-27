@@ -11,6 +11,13 @@
 
 
 
+typedef enum
+{
+	_INTERRUPT_FLAG_TWI,
+	_WRITE_COLLISION_FLAG_TWI
+
+}TWI_FLAG;
+
 
 typedef enum
 {
@@ -35,6 +42,7 @@ typedef struct twi_configstruct
 	uint8_t 		   TWI_addresse;
 	uint32_t 		   CPU_Frequency;
 	uint32_t		   SCL_Frequency;
+	void(*TWI_callBackPtr)(void);   /*In case of _DISABLE_INTERRUPT , set this pointer to Null (it is ignored)*/
 
 }TWI_ConfigStruct;
 
@@ -48,9 +56,9 @@ void TWI_stop();
 
 void TWI_send(uint8_t);
 
-void TWI_read(const TWI_ACKNOWLEDGMENT);
+uint8_t TWI_read(const TWI_ACKNOWLEDGMENT);
 
-uint8_t TWI_getFlag(uint8_t);
+uint8_t TWI_getFlag(const TWI_FLAG);
 
 uint8_t TWI_getStatus();
 
