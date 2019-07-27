@@ -1,0 +1,50 @@
+
+
+
+#include "i2c.h"
+
+
+
+
+
+
+uint8_t TWI_getFlag(TWI_FLAG TWI_FLAG)
+{
+
+	if(TWI_FLAG==_INTERRUPT_FLAG_TWI)
+	{
+
+	return MASK_BITS_THEN_SHIFT_LEFT(TWI_CONTROL_REGSITER,TWI_INTERRUPT_FLAG,BIT_7);
+
+	}
+	else
+	{
+
+	return MASK_BITS_THEN_SHIFT_LEFT(TWI_CONTROL_REGSITER,TWI_WRITE_COLLISION_FLAG,BIT_3);
+
+	}
+
+}
+
+
+
+
+bool TWI_interruptDisable()
+{
+
+
+	RESET_BIT(TWI_CONTROL_REGSITER,TWI_INTERRUPT_ENABLE);
+
+
+	return TRUE;
+}
+
+
+
+bool TWI_disable()
+{
+
+	RESET_BIT(TWI_CONTROL_REGSITER,TWI_ENABLE);
+
+	return TRUE;
+}
