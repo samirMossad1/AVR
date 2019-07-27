@@ -1,8 +1,46 @@
 
 
-
 #include "i2c.h"
 
+
+#define BIT_RATE(CPU_FR,SCL_FR) (((CPU_FR)/(2*SCL_FR))-8)
+
+
+static void (*TWI_CallBackPtr_g)=NULL_PTR;
+
+
+
+
+bool TWI_init(const TWI_ConfigStruct* TWI_structPtr)
+{
+	if(TWI_structPtr == NULL_PTR)	return FALSE;
+
+	/*clear register*/
+	TWI_CONTROL_REGISTER=0x00;
+
+	/*clear flag*/
+	SET_BIT(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG);
+
+	TWI_CONTROL_REGISTER|=( (TWI_structPtr->TWI_INT) << TWI_INTERRUPT_ENABLE )|
+						  ( (TWI_structPtr->TWI_ACK) << TWI_ACKNOWLEDGE_ENABLE );
+
+
+
+	TWI_STATUS_REGISTER&=~(1<<TWI_PRESCALAR_0)&~(1<<TWI_PRESCALAR_1);
+
+	TWI_BIT_RATE_REGISTER=BIT_RATE(TWI_structPtr->CPU_Frequency,TWI_structPtr->SCL_Frequency);
+
+
+
+	TWI_CallBackPtr_g=TWI_structPtr->TWI_callBackPtr;
+
+	TWI_ADDRESSE_REGISTER = ( (TWI_structPtr->TWI_addresse)<<BIT_1);
+
+
+	SET_BIT(TWI_CONTROL_REGISTER,TWI_ENABLE);
+
+	return TRUE;
+}
 
 void TWI_start()
 {
