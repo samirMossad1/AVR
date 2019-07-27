@@ -56,7 +56,7 @@ void TWI_stop();
 
 void TWI_send(uint8_t);
 
-uint8_t TWI_read(const TWI_ACKNOWLEDGMENT);
+uint8_t TWI_read();
 
 uint8_t TWI_getFlag(const TWI_FLAG);
 
