@@ -27,6 +27,27 @@ void TWI_stop()
 }
 
 
+void TWI_send(uint8_t data)
+{
+	TWI_DATA_REGISTER=data;
+
+	TWI_CONTROL_REGISTER|=(1<<TWI_INTERRUPT_FLAG)|
+						  (1<<TWI_ENABLE);
+
+	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
+
+}
+
+
+uint8_t TWI_read()
+{
+	TWI_CONTROL_REGISTER|=(1<<TWI_INTERRUPT_FLAG)|
+						  (1<<TWI_ENABLE);
+
+	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
+
+	return TWI_DATA_REGISTER;
+}
 
 uint8_t TWI_getStatus()
 {
