@@ -59,6 +59,7 @@ typedef enum
 
 typedef struct twi_configstruct
 {
+	TWI_INTERRUPT	   TWI_INT;
 	uint8_t 		   TWI_addresse;
 	uint32_t 		   CPU_Frequency;
 	uint32_t		   SCL_Frequency;
@@ -80,7 +81,7 @@ uint8_t TWI_getFlag(const TWI_FLAG);
 
 uint8_t TWI_getStatus();
 
-bool TWI_interruptEnable(void(*)(void),void(*)(void));
+bool TWI_setInterruptCallBacks(void(*)(void),void(*)(void));
 
 bool TWI_interruptDisable();
 

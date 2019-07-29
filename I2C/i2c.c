@@ -74,6 +74,8 @@ bool TWI_init(const TWI_ConfigStruct* TWI_structPtr)
 	/*clear flag*/
 	SET_BIT(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG);
 
+	TWI_CONTROL_REGISTER|=(TWI_structPtr->TWI_INT<<TWI_INTERRUPT_ENABLE);
+
 	TWI_STATUS_REGISTER&=~(1<<TWI_PRESCALAR_0)&~(1<<TWI_PRESCALAR_1);
 
 	TWI_BIT_RATE_REGISTER=BIT_RATE(TWI_structPtr->CPU_Frequency,TWI_structPtr->SCL_Frequency);
@@ -164,13 +166,11 @@ uint8_t TWI_getFlag(TWI_FLAG TWI_FLAG)
 
 
 
-bool TWI_interruptEnable(void(*Trans_CallBackPtr)(void),void(*Receive_CallBackPtr)(void))
+bool TWI_setInterruptCallBacks(void(*Trans_CallBackPtr)(void),void(*Receive_CallBackPtr)(void))
 {
 
 	TWI_CallBackPtr_g[0]=Trans_CallBackPtr;
 	TWI_CallBackPtr_g[1]=Receive_CallBackPtr;
-
-	SET_BIT(TWI_CONTROL_REGISTER,TWI_INTERRUPT_ENABLE);
 
 	return TRUE;
 }
