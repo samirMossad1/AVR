@@ -29,8 +29,6 @@ static volatile uint8_t TWI_currentStatus_g=0x00;
 static TWI_INTERRUPT TWI_interruptStatus;
 
 
-/*Global Variables To Be Externed (For Errors)*/
-
 
 
 /*Interrupt Service Routine*/
@@ -104,7 +102,7 @@ void TWI_start()
 			(1<<TWI_ENABLE);
 
 	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
-	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
+		while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 }
 
 
@@ -117,7 +115,7 @@ void TWI_stop()
 
 
 	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
-	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
+		while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 
 }
 
@@ -131,7 +129,7 @@ void TWI_send(uint8_t data)
 
 
 	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
-	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
+		while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 
 }
 
@@ -148,7 +146,7 @@ uint8_t TWI_read(const 	TWI_ACKNOWLEDGMENT TWI_ACK)
 
 
 	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
-	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
+		while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 
 	return TWI_DATA_REGISTER;
 }
