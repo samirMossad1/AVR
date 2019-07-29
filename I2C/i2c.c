@@ -15,6 +15,7 @@
 static uint8_t TWI_ReceiveOrSend(uint8_t);
 
 
+
 /*Call Back Pointers*/
 static void (*TWI_CallBackPtr_g[2])=
 {
@@ -23,6 +24,7 @@ static void (*TWI_CallBackPtr_g[2])=
 };
 
 
+static volatile uint8_t TWI_currentStatus_g=0x00;
 
 
 /*Interrupt Service Routine*/
@@ -30,21 +32,29 @@ ISR(TWI_vect)
 {
 
 
-	/*Transmit*/
-	if(TWI_CallBackPtr_g[0] != NULL_PTR)
+	TWI_currentStatus_g=TWI_ReceiveOrSend(TWI_getStatus());
+
+	if(TWI_currentStatus_g==SENT)
 	{
-		TWI_CallBackPtr_g[0]();
+
+		/*Transmit*/
+		if(TWI_CallBackPtr_g[0] != NULL_PTR)
+		{
+			TWI_CallBackPtr_g[0]();
+		}
+
 	}
 
-
-
-	/*Receive*/
-	if(TWI_CallBackPtr_g[1] != NULL_PTR)
+	else
 	{
-		TWI_CallBackPtr_g[1]();
+
+		/*Receive*/
+		if(TWI_CallBackPtr_g[1] != NULL_PTR)
+		{
+			TWI_CallBackPtr_g[1]();
+		}
+
 	}
-
-
 
 
 	/*Clear the interrupt flag*/
@@ -195,8 +205,24 @@ static uint8_t TWI_ReceiveOrSend(uint8_t status)
 	switch(status)
 	{
 
+	case  TWI_MASTER_START_CONDITION_SENT:
+	case  TWI_MASTER_REPEATED_START_CONDITION_SENT:
+	case  TWI_MASTER_SLAVE_ADD_WITH_WRITE_SENT_ACK_RECEIVED:
+	case  TWI_MASTER_SLAVE_ADD_WITH_WRITE_SENT_NO_ACK_RECEIVED:
+	case  TWI_MASTER_SLAVE_ADD_WITH_READ_SENT_ACK_RECEIVED:
+	case  TWI_MASTER_SLAVE_ADD_WITH_READ_SENT_NO_ACK_RECEIVED:
+	case  TWI_MASTER_DATA_BYTE_TRANSMITTED_WITH_ACK_RECEIVED:
+	case  TWI_MASTER_DATA_BYTE_TRANSMITTED_WITH_NO_ACK_RECEIVED:
+	case  TWI_SLAVE_DATA_BYTE_TRANSMITTED_WITH_ACK_RECEIVED:
+	case  TWI_SLAVE_DATA_BYTE_TRANSMITTED_WITH_NO_ACK_RECEIVED:	return SENT;
 
-
+	case TWI_MASTER_DATA_BYTE_RECEIVED_WITH_ACK_TRANSMITTED:
+	case TWI_MASTER_DATA_BYTE_RECEIVED_WITH_ACK_TRANSMITTED:
+	case TWI_SLAVE_REPEATED_START_CONDITION_RECEIVED:
+	case TWI_SLAVE_SLAVE_ADD_WITH_WRITE_RECEIVED_ACK_SENT:
+	case TWI_SLAVE_SLAVE_ADD_WITH_READ_RECEIVED_ACK_SENT:
+	case TWI_SLAVE_DATA_BYTE_RECEIVED_WITH_ACK_TRANSMITTED:
+	case TWI_SLAVE_DATA_BYTE_RECEIVED_WITH_NO_ACK_TRANSMITTED: return RECEIVED;
 
 
 	default: return SENT;
