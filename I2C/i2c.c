@@ -24,7 +24,13 @@ static void (*TWI_CallBackPtr_g[2])=
 };
 
 
+/*Static Global Variables*/
 static volatile uint8_t TWI_currentStatus_g=0x00;
+static TWI_INTERRUPT TWI_interruptStatus;
+
+
+/*Global Variables To Be Externed (For Errors)*/
+
 
 
 /*Interrupt Service Routine*/
@@ -76,6 +82,8 @@ bool TWI_init(const TWI_ConfigStruct* TWI_structPtr)
 
 	TWI_CONTROL_REGISTER|=(TWI_structPtr->TWI_INT<<TWI_INTERRUPT_ENABLE);
 
+	TWI_interruptStatus=(TWI_structPtr->TWI_INT);
+
 	TWI_STATUS_REGISTER&=~(1<<TWI_PRESCALAR_0)&~(1<<TWI_PRESCALAR_1);
 
 	TWI_BIT_RATE_REGISTER=BIT_RATE(TWI_structPtr->CPU_Frequency,TWI_structPtr->SCL_Frequency);
@@ -95,6 +103,7 @@ void TWI_start()
 			(1<<TWI_START)|
 			(1<<TWI_ENABLE);
 
+	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
 	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 }
 
@@ -106,6 +115,8 @@ void TWI_stop()
 			(1<<TWI_STOP)|
 			(1<<TWI_ENABLE);
 
+
+	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
 	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 
 }
@@ -118,6 +129,8 @@ void TWI_send(uint8_t data)
 	TWI_CONTROL_REGISTER|=(1<<TWI_INTERRUPT_FLAG)|
 			(1<<TWI_ENABLE);
 
+
+	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
 	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 
 }
@@ -133,6 +146,8 @@ uint8_t TWI_read(const 	TWI_ACKNOWLEDGMENT TWI_ACK)
 			(TWI_ACK<<TWI_ACKNOWLEDGE_ENABLE);
 
 
+
+	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
 	while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 
 	return TWI_DATA_REGISTER;
