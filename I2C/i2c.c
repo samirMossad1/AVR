@@ -3,9 +3,19 @@
 #include "i2c.h"
 
 
+
+/*Macros*/
+
 #define BIT_RATE(CPU_FR,SCL_FR) (((CPU_FR)/(2*SCL_FR))-8)
+#define SENT 		(1U)
+#define RECEIVED	(0U)
 
 
+/*Prototypes*/
+static uint8_t TWI_ReceiveOrSend(uint8_t);
+
+
+/*Call Back Pointers*/
 static void (*TWI_CallBackPtr_g[2])=
 {
 		NULL_PTR		/*Transmit CallBack Pointer*/
@@ -15,16 +25,15 @@ static void (*TWI_CallBackPtr_g[2])=
 
 
 
-
+/*Interrupt Service Routine*/
 ISR(TWI_vect)
 {
 
-	/*Transmit*/
 
+	/*Transmit*/
 	if(TWI_CallBackPtr_g[0] != NULL_PTR)
 	{
-
-
+		TWI_CallBackPtr_g[0]();
 	}
 
 
@@ -32,12 +41,14 @@ ISR(TWI_vect)
 	/*Receive*/
 	if(TWI_CallBackPtr_g[1] != NULL_PTR)
 	{
-
-
+		TWI_CallBackPtr_g[1]();
 	}
 
 
 
+
+	/*Clear the interrupt flag*/
+	SET_BIT(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG);
 
 }
 
@@ -143,6 +154,16 @@ uint8_t TWI_getFlag(TWI_FLAG TWI_FLAG)
 
 
 
+bool TWI_interruptEnable(void(*Trans_CallBackPtr)(void),void(*Receive_CallBackPtr)(void))
+{
+
+	TWI_CallBackPtr_g[0]=Trans_CallBackPtr;
+	TWI_CallBackPtr_g[1]=Receive_CallBackPtr;
+
+	SET_BIT(TWI_CONTROL_REGISTER,TWI_INTERRUPT_ENABLE);
+
+	return TRUE;
+}
 
 bool TWI_interruptDisable()
 {
@@ -150,10 +171,12 @@ bool TWI_interruptDisable()
 
 	RESET_BIT(TWI_CONTROL_REGISTER,TWI_INTERRUPT_ENABLE);
 
+	TWI_CallBackPtr_g[0]=NULL_PTR;
+	TWI_CallBackPtr_g[1]=NULL_PTR;
+
 
 	return TRUE;
 }
-
 
 
 bool TWI_disable()
@@ -166,7 +189,19 @@ bool TWI_disable()
 
 
 
+static uint8_t TWI_ReceiveOrSend(uint8_t status)
+{
 
-/*
- * INTERRUPTS !!!!
- * */
+	switch(status)
+	{
+
+
+
+
+
+	default: return SENT;
+	}
+
+
+}
+
