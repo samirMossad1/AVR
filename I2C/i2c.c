@@ -110,27 +110,20 @@ void TWI_stop()
 {
 
 	TWI_CONTROL_REGISTER|=(1<<TWI_INTERRUPT_FLAG)|
-			(1<<TWI_STOP)|
-			(1<<TWI_ENABLE);
-
-
-	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
-		while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
+						  (1<<TWI_STOP)|
+						  (1<<TWI_ENABLE);
 
 }
 
 
 void TWI_send(uint8_t data)
 {
-	TWI_DATA_REGISTER=data;
+	   TWI_DATA_REGISTER=data;
 
-	TWI_CONTROL_REGISTER|=(1<<TWI_INTERRUPT_FLAG)|
-			(1<<TWI_ENABLE);
+		TWI_CONTROL_REGISTER=(1<<TWI_INTERRUPT_FLAG)|
+							  (1<<TWI_ENABLE);
 
-
-	if(TWI_interruptStatus != _ENABLE_INTERRUPT)
 		while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
-
 }
 
 
@@ -149,6 +142,8 @@ uint8_t TWI_read(const 	TWI_ACKNOWLEDGMENT TWI_ACK)
 		while(BIT_IS_CLEAR(TWI_CONTROL_REGISTER,TWI_INTERRUPT_FLAG));
 
 	return TWI_DATA_REGISTER;
+
+
 }
 
 uint8_t TWI_getStatus()
