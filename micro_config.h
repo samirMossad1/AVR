@@ -177,6 +177,35 @@
 #define CLEAR_TRANSMISSION_SPEED_MASK    (0x01)
 
 
+
+
+/*TWI REGISTERS*/
+#define TWI_CONTROL_REGISTER			TWCR
+#define TWI_STATUS_REGISTER				TWSR
+#define TWI_DATA_REGISTER				TWDR
+#define TWI_ADDRESSE_REGISTER			TWAR
+#define TWI_BIT_RATE_REGISTER			TWBR
+
+
+/*TWI BITS*/
+#define TWI_ENABLE						BIT_2
+#define TWI_INTERRUPT_ENABLE			BIT_0
+#define TWI_START						BIT_5
+#define TWI_STOP						BIT_1
+#define TWI_ACKNOWLEDGE_ENABLE			BIT_6
+#define TWI_PRESCALAR_1					BIT_1
+#define TWI_PRESCALAR_0					BIT_0
+
+
+/*TWI FLAGS*/
+#define TWI_INTERRUPT_FLAG				BIT_7
+#define TWI_WRITE_COLLISION_FLAG		BIT_3
+
+
+/*TWI MASKS*/
+#define TWI_MASK_STATUS_BITS			0XF8
+
+
 /** Enums which are related to the micro controller arch. **/
 
 typedef enum port
