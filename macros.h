@@ -20,6 +20,10 @@
 /*Mask all other bits except with the bit of order BIT_NUM*/
 #define MASK_BITS(REG,BIT_NUM) ( (REG)&(1<<BIT_NUM) )
 
+
+#define MASK_BITS_THEN_SHIFT_LEFT(REG,BIT_NUM,N) ( ((REG)&(1<<BIT_NUM))>>N )
+
+
 /*Check if specific bit is set in any register*/
 #define BIT_IS_SET(REG,BIT_NUM) ((REG)&(1<<BIT_NUM))
 
