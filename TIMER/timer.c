@@ -20,6 +20,19 @@ static volatile void (*TIMER_callBackPtrs[8])(void)=
 
 
 
+bool TIMER_init(const TIMER_ConfigStruct* timerConfigStruct_ptr)
+{
+
+	if(timerConfigStruct_ptr==NULL_PTR)
+		return FALSE;
+
+
+
+
+	return TRUE;
+}
+
+
 
 
 bool TIMER_enable(const TIMER_NUMBER TIMER_NUM,const TIMER_PRESCALAR TIMER_PRE)
@@ -250,42 +263,42 @@ static bool TIMER_enablePIN_OCn(TIMER_OUTPUT_COMPARE_PIN COMPARE_PIN)
 
 /*ISRs*/
 
-void ISR(TIMER0_OVF_vect)
+ISR(TIMER0_OVF_vect)
 {
 
 	(TIMER_callBackPtrs[0])();
 
 }
 
-void ISR(TIMER0_COMP_vect)
+ISR(TIMER0_COMP_vect)
 {
 
 	(TIMER_callBackPtrs[1])();
 
 }
 
-void ISR(TIMER1_OVF_vect)
+ISR(TIMER1_OVF_vect)
 {
 
 	(TIMER_callBackPtrs[2])();
 
 }
 
-void ISR(TIMER1_COMPA_vect)
+ISR(TIMER1_COMPA_vect)
 {
 
 	(TIMER_callBackPtrs[3])();
 
 }
 
-void ISR(TIMER1_COMPB_vect)
+ISR(TIMER1_COMPB_vect)
 {
 
 	(TIMER_callBackPtrs[4])();
 
 }
 
-void ISR(TIMER1_CAPT_vect)
+ISR(TIMER1_CAPT_vect)
 {
 
 	(TIMER_callBackPtrs[5])();
@@ -293,14 +306,14 @@ void ISR(TIMER1_CAPT_vect)
 }
 
 
-void ISR(TIMER2_OVF_vect)
+ISR(TIMER2_OVF_vect)
 {
 
 	(TIMER_callBackPtrs[6])();
 
 }
 
-void ISR(TIMER2_COMP_vect)
+ISR(TIMER2_COMP_vect)
 {
 
 	(TIMER_callBackPtrs[7])();
