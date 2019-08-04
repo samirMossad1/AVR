@@ -191,7 +191,7 @@
 #define TWI_ENABLE						BIT_2
 #define TWI_INTERRUPT_ENABLE			BIT_0
 #define TWI_START						BIT_5
-#define TWI_STOP						BIT_1
+#define TWI_STOP						BIT_4
 #define TWI_ACKNOWLEDGE_ENABLE			BIT_6
 #define TWI_PRESCALAR_1					BIT_1
 #define TWI_PRESCALAR_0					BIT_0
