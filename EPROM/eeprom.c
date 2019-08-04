@@ -46,4 +46,38 @@ uint8_t EEPROM_writeByte(const uint16_t addresse_t,const uint8_t data_t)
 	return TRUE;
 }
 
+uint8_t	EEPROM_readByte(const uint16_t addresse_t,uint8_t* data_t)
+{
 
+	TWI_start();
+	if(TWI_getStatus()!=TWI_MASTER_START_CONDITION_SENT)
+		return FALSE;
+
+	TWI_send( SLAVE_ADDRESSE_ADJUST_WITH_WRITE_COMMAND(addresse_t) );
+	if(TWI_getStatus()!=TWI_MASTER_SLAVE_ADD_WITH_WRITE_SENT_ACK_RECEIVED)
+		return FALSE;
+
+
+	TWI_send((uint8_t)(addresse_t));
+	if(TWI_getStatus()!=TWI_MASTER_DATA_BYTE_TRANSMITTED_WITH_ACK_RECEIVED)
+		return FALSE;
+
+
+	TWI_start();
+	if(TWI_getStatus()!=TWI_MASTER_REPEATED_START_CONDITION_SENT)
+		return FALSE;
+
+	TWI_send( SLAVE_ADDRESSE_ADJUST_WITH_READ_COMMAND(addresse_t) );
+	if(TWI_getStatus()!=TWI_MASTER_SLAVE_ADD_WITH_READ_SENT_ACK_RECEIVED)
+		return FALSE;
+
+
+	(*data_t)=TWI_read(_ACK_DISABLE);
+	if(TWI_getStatus()!=TWI_MASTER_DATA_BYTE_RECEIVED_WITH_NO_ACK_TRANSMITTED)
+		return FALSE;
+
+
+	TWI_stop();
+
+	return TRUE;
+}
