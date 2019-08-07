@@ -32,16 +32,69 @@ static void (*TIMER_callBackPtrs[8])(void)=
 bool TIMER_init(const TIMER_ConfigStruct* timerConfigStruct_ptr)
 {
 
+	if(timerConfigStruct_ptr==NULL_PTR)
+		return FALSE;
 
 
+	switch(timerConfigStruct_ptr->TIMER_N)
+	{
+
+	case TIMER_0 :
+
+		if(timerConfigStruct_ptr->TIMER_MODE==_CTC_MODE)
+		{
+			return	timer0_compareOnClearMode_init(timerConfigStruct_ptr->TIMER_PIN,timerConfigStruct_ptr->TIMER_OUT);
+		}
+		else if(timerConfigStruct_ptr->TIMER_MODE==_PWM_MODE)
+		{
+			return	timer0_pwmMode_init(timerConfigStruct_ptr->TIMER_PWM);
+		}
+		else if(timerConfigStruct_ptr->TIMER_MODE==_NORMAL_MODE)
+		{
+			return	timer0_overflowMode_init();
+		}
+
+		break;
+
+	case TIMER_1 :
+
+		if(timerConfigStruct_ptr->TIMER_MODE==_CTC_MODE)
+		{
+			return	timer2_compareOnClearMode_init(timerConfigStruct_ptr->TIMER_PIN,timerConfigStruct_ptr->TIMER_OUT);
+		}
+		else if(timerConfigStruct_ptr->TIMER_MODE==_PWM_MODE)
+		{
+			return	timer2_pwmMode_init(timerConfigStruct_ptr->TIMER_PWM);
+		}
+		else if(timerConfigStruct_ptr->TIMER_MODE==_NORMAL_MODE)
+		{
+			return  timer1_overflowMode_init();
+		}
+
+		break;
 
 
+	case TIMER_2 :
 
+		if(timerConfigStruct_ptr->TIMER_MODE==_CTC_MODE)
+		{
+			return	timer2_compareOnClearMode_init(timerConfigStruct_ptr->TIMER_PIN,timerConfigStruct_ptr->TIMER_OUT);
+		}
+		else if(timerConfigStruct_ptr->TIMER_MODE==_PWM_MODE)
+		{
+			return	timer2_pwmMode_init(timerConfigStruct_ptr->TIMER_PWM);
+		}
+		else if(timerConfigStruct_ptr->TIMER_MODE==_NORMAL_MODE)
+		{
+			return	timer2_overflowMode_init();
+		}
 
+		break;
 
+	default: return FALSE;
 
+	}
 
-	return TRUE;
 }
 
 
@@ -333,7 +386,7 @@ uint16_t TIMER1_ICU_readCaptureReg()
 
 static bool timer0_overflowMode_init(void)
 {
-	TIMER0_CONTROL_REGISTER=0x00;
+	TIMER0_CONTROL_REGISTER=TIMER_OVERFLOW_MODE_MASK;
 	return TRUE;
 }
 
@@ -382,7 +435,7 @@ static bool timer0_pwmMode_init(const TIMER_PWM_SIGNAL TIMER_PWM)
 
 static bool timer2_overflowMode_init(void)
 {
-	TIMER2_CONTROL_REGISTER=0x00;
+	TIMER2_CONTROL_REGISTER=TIMER_OVERFLOW_MODE_MASK;
 	return TRUE;
 }
 
@@ -429,8 +482,15 @@ static bool timer2_pwmMode_init(const TIMER_PWM_SIGNAL TIMER_PWM)
 
 }
 
+static bool timer1_overflowMode_init(void)
+{
 
-//static bool timer1_overflowMode_init(void)
+	TIMER1A_CONTROL_REGISTER=TIMER1_OVERFLOW_MODE_MASK_A;
+	TIMER1B_CONTROL_REGISTER=TIMER1_OVERFLOW_MODE_MASK_B;
+
+	return TRUE;
+}
+
 //static bool timer1_compareOnClearMode_init(void)
 //static bool timer1_pwmMode_init(void)
 //static bool timer1_inputCaptureMode_init(void)
