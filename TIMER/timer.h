@@ -93,12 +93,11 @@ typedef struct timer_configStruct
 	TIMER_INTERRUPT 	TIMER_INT;
 	TIMER_PINS			TIMER_PIN;
 	TIMER_PWM_SIGNAL	TIMER_PWM;   /*use the ignore option in case of NON pwm mode*/
-	void (* CallBack_ptr)(void);	 /*in case of No interrupts, set this pointer to NULL_PTR*/
 
 }TIMER_ConfigStruct;
 
 
-
+void (* CallBack_ptr)(void);
 
 
 bool TIMER_init(const TIMER_ConfigStruct *);
@@ -116,6 +115,8 @@ void TIMER_COMPARE_setValue(const TIMER_NUMBER ,const TIMER_CHANNEL,const TIMER_
 void TIMER1_ICU_setEdge(const TIMER_ICU_EDGE);
 
 uint16_t TIMER1_ICU_readCaptureReg();
+
+bool TIMER_interruptEnable((const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG,void(*)(void));
 
 bool TIMER_interruptDisable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 
