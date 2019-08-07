@@ -116,7 +116,8 @@ void TIMER1_ICU_setEdge(const TIMER_ICU_EDGE);
 
 uint16_t TIMER1_ICU_readCaptureReg();
 
-bool TIMER_interruptEnable((const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG,void(*)(void));
+bool TIMER_interruptEnable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG,void(*)(void));
+
 
 bool TIMER_interruptDisable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 
