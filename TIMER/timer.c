@@ -3,7 +3,16 @@
 #include "timer.h"
 
 
-static bool TIMER_enablePIN_OCn(TIMER_OUTPUT_COMPARE_PIN);
+static bool timer0_overflowMode_init(void);
+static bool timer0_pwmMode_init(const TIMER_PWM_SIGNAL);
+static bool timer0_compareOnClearMode_init(TIMER_PINS,TIMER_OUTPUT_TYPES);
+static bool timer1_overflowMode_init(void);
+static bool timer1_compareOnClearMode_init(void);
+static bool timer1_pwmMode_init(void);
+static bool timer1_inputCaptureMode_init(void);
+static bool timer2_overflowMode_init(void);
+static bool timer2_pwmMode_init(const TIMER_PWM_SIGNAL);
+static bool timer2_compareOnClearMode_init(TIMER_PINS,TIMER_OUTPUT_TYPES);
 
 static void (*TIMER_callBackPtrs[8])(void)=
 {
@@ -22,9 +31,6 @@ static void (*TIMER_callBackPtrs[8])(void)=
 
 bool TIMER_init(const TIMER_ConfigStruct* timerConfigStruct_ptr)
 {
-
-	if(timerConfigStruct_ptr==NULL_PTR)
-		return FALSE;
 
 
 
@@ -323,31 +329,111 @@ uint16_t TIMER1_ICU_readCaptureReg()
 }
 
 
-static bool TIMER_enablePIN_OCn(TIMER_OUTPUT_COMPARE_PIN COMPARE_PIN)
+
+
+static bool timer0_overflowMode_init(void)
+{
+	TIMER0_CONTROL_REGISTER=0x00;
+	return TRUE;
+}
+
+
+static bool timer0_compareOnClearMode_init(TIMER_PINS TIMER_PIN,TIMER_OUTPUT_TYPES TIMER_OUTPUT)
 {
 
-	switch(COMPARE_PIN)
+	TIMER0_CONTROL_REGISTER=0x00;
+
+
+
+	if(TIMER_PIN==_NORMAL_PIN)
 	{
+		TIMER0_CONTROL_REGISTER|=TIMER_COMPARE_MODE_WITH_NORMAL_PIN_MASK;
+	}
+	else
+	{
+		SET_BIT(GPIO_PORTB_DIRECTION_REGISTER,BIT_3);
 
-	case _OC0 : SET_BIT(GPIO_PORTB_DIRECTION_REGISTER,BIT_3);
-	break;
-
-
-	case _OC1A : SET_BIT(GPIO_PORTD_DIRECTION_REGISTER,BIT_5);
-	break;
-
-	case _OC1B : SET_BIT(GPIO_PORTD_DIRECTION_REGISTER,BIT_4);
-	break;
-
-	case _OC2 : SET_BIT(GPIO_PORTD_DIRECTION_REGISTER,BIT_7);
-	break;
-
+		if(TIMER_OUTPUT==_OUTPUT_COMPARE_TOGGLE)
+			TIMER0_CONTROL_REGISTER|=TIMER_COMPARE_MODE_WITH_OC_TOGGLE_PIN_MASK;
+		else if(TIMER_OUTPUT==_OUTPUT_COMPARE_CLEAR)
+			TIMER0_CONTROL_REGISTER|=TIMER_COMPARE_MODE_WITH_OC_CLEAR_PIN_MASK;
+		else if(TIMER_OUTPUT==_OUTPUT_COMPARE_SET)
+			TIMER0_CONTROL_REGISTER|=TIMER_COMPARE_MODE_WITH_OC_SET_PIN_MASK;
 	}
 
 
 	return TRUE;
+
+}
+static bool timer0_pwmMode_init(const TIMER_PWM_SIGNAL TIMER_PWM)
+{
+
+	TIMER0_CONTROL_REGISTER=0x00;
+
+	if(TIMER_PWM==_NON_INVERTING)
+		TIMER0_CONTROL_REGISTER|=TIMER_PWM_MODE_NON_INVERTED_MASK;
+
+	else if(TIMER_PWM==_INVERTING)
+		TIMER0_CONTROL_REGISTER|=TIMER_PWM_MODE_INVERTED_MASK;
+
+	return TRUE;
+
 }
 
+static bool timer2_overflowMode_init(void)
+{
+	TIMER2_CONTROL_REGISTER=0x00;
+	return TRUE;
+}
+
+
+static bool timer2_compareOnClearMode_init(TIMER_PINS TIMER_PIN,TIMER_OUTPUT_TYPES TIMER_OUTPUT)
+{
+
+	TIMER0_CONTROL_REGISTER=0x00;
+
+
+
+	if(TIMER_PIN==_NORMAL_PIN)
+	{
+		TIMER2_CONTROL_REGISTER|=TIMER_COMPARE_MODE_WITH_NORMAL_PIN_MASK;
+	}
+	else
+	{
+		SET_BIT(GPIO_PORTD_DIRECTION_REGISTER,BIT_7);
+
+		if(TIMER_OUTPUT==_OUTPUT_COMPARE_TOGGLE)
+			TIMER2_CONTROL_REGISTER|=TIMER_COMPARE_MODE_WITH_OC_TOGGLE_PIN_MASK;
+		else if(TIMER_OUTPUT==_OUTPUT_COMPARE_CLEAR)
+			TIMER2_CONTROL_REGISTER|=TIMER_COMPARE_MODE_WITH_OC_CLEAR_PIN_MASK;
+		else if(TIMER_OUTPUT==_OUTPUT_COMPARE_SET)
+			TIMER2_CONTROL_REGISTER|=TIMER_COMPARE_MODE_WITH_OC_SET_PIN_MASK;
+	}
+
+
+	return TRUE;
+
+}
+static bool timer2_pwmMode_init(const TIMER_PWM_SIGNAL TIMER_PWM)
+{
+
+	TIMER2_CONTROL_REGISTER=0x00;
+
+	if(TIMER_PWM==_NON_INVERTING)
+		TIMER2_CONTROL_REGISTER|=TIMER_PWM_MODE_NON_INVERTED_MASK;
+
+	else if(TIMER_PWM==_INVERTING)
+		TIMER2_CONTROL_REGISTER|=TIMER_PWM_MODE_INVERTED_MASK;
+
+	return TRUE;
+
+}
+
+
+//static bool timer1_overflowMode_init(void)
+//static bool timer1_compareOnClearMode_init(void)
+//static bool timer1_pwmMode_init(void)
+//static bool timer1_inputCaptureMode_init(void)
 
 
 
