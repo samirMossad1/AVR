@@ -29,6 +29,12 @@ bool TIMER_init(const TIMER_ConfigStruct* timerConfigStruct_ptr)
 
 
 
+
+
+
+
+
+
 	return TRUE;
 }
 
@@ -145,6 +151,94 @@ uint8_t	 TIMER_readStatus(const TIMER_NUMBER TIMER_NUM,const TIMER_CHANNEL TIMER
 
 
 
+bool TIMER_interruptEnable(const TIMER_NUMBER TIMER_NUMBER,const TIMER_CHANNEL TIMER_CHAN,const TIMER_FLAG TIMER_FLAG,void(*CallBack_ptr)(void))
+{
+
+	if(CallBack_ptr == NULL_PTR)
+		return FALSE;
+
+	switch(TIMER_NUMBER)
+	{
+
+	case TIMER_0 : if(TIMER_FLAG == _OVERFLOW)
+	{
+
+		TIMER_callBackPtrs[0]=CallBack_ptr;
+		SET_BIT(TIMER_FLAG_REGISTER,TIMER0_OVERFLOW_FLAG);
+		SET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER0_OVERFLOW_INTERRUPT_ENABLE);
+	}
+	else
+	{
+
+		TIMER_callBackPtrs[1]=CallBack_ptr;
+		SET_BIT(TIMER_FLAG_REGISTER,TIMER0_COMPARE_FLAG);
+		SET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER0_COMPARE_INTERRUPT_ENABLE);
+	}
+	break;
+
+
+	case TIMER_1 :if(TIMER_FLAG == _OVERFLOW)
+	{
+
+		TIMER_callBackPtrs[2]=CallBack_ptr;
+		SET_BIT(TIMER_FLAG_REGISTER,TIMER1_OVERFLOW_FLAG);
+		SET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER1_OVERFLOW_INTERRUPT_ENABLE);
+	}
+	else if(TIMER_FLAG == _INPUT_CAPTURE)
+	{
+
+		TIMER_callBackPtrs[5]=CallBack_ptr;
+		SET_BIT(TIMER_FLAG_REGISTER,TIMER1_INPUT_CAPTURE_FLAG);
+		SET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER1_INPUT_CAPTURE_INTERRUPT_ENABLE);
+
+	}
+	else
+	{
+		if(TIMER_CHAN == _CHANNEL_A)
+		{
+
+			TIMER_callBackPtrs[3]=CallBack_ptr;
+			SET_BIT(TIMER_FLAG_REGISTER,TIMER1A_COMPARE_FLAG);
+			SET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER1A_COMPARE_INTERRUPT_ENABLE);
+		}
+		else
+		{
+			TIMER_callBackPtrs[4]=CallBack_ptr;
+			SET_BIT(TIMER_FLAG_REGISTER,TIMER1B_COMPARE_FLAG);
+			SET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER1B_COMPARE_INTERRUPT_ENABLE);
+		}
+
+
+	}
+	break;
+
+
+	case TIMER_2 : if(TIMER_FLAG == _OVERFLOW)
+	{
+
+		TIMER_callBackPtrs[6]=CallBack_ptr;
+		SET_BIT(TIMER_FLAG_REGISTER,TIMER2_OVERFLOW_FLAG);
+		SET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER2_OVERFLOW_INTERRUPT_ENABLE);
+	}
+	else
+	{
+
+		TIMER_callBackPtrs[7]=CallBack_ptr;
+		SET_BIT(TIMER_FLAG_REGISTER,TIMER2_COMPARE_FLAG);
+		SET_BIT(TIMER_INTERRUPT_MASK_REGISTER,TIMER2_COMPARE_INTERRUPT_ENABLE);
+	}
+	break;
+
+
+	}
+
+
+
+
+
+
+	return TRUE;
+}
 
 bool TIMER_interruptDisable(const TIMER_NUMBER TIMER_NUMBER,const TIMER_CHANNEL TIMER_CHAN,const TIMER_FLAG TIMER_FLAG)
 {
@@ -266,42 +360,50 @@ static bool TIMER_enablePIN_OCn(TIMER_OUTPUT_COMPARE_PIN COMPARE_PIN)
 ISR(TIMER0_OVF_vect)
 {
 
-	(TIMER_callBackPtrs[0])();
+	if(TIMER_callBackPtrs[0]!=NULL_PTR)
+		(TIMER_callBackPtrs[0])();
 
 }
 
 ISR(TIMER0_COMP_vect)
 {
 
-	(TIMER_callBackPtrs[1])();
+	if(TIMER_callBackPtrs[1]!=NULL_PTR)
+		(TIMER_callBackPtrs[1])();
 
 }
 
 ISR(TIMER1_OVF_vect)
 {
 
-	(TIMER_callBackPtrs[2])();
+	if(TIMER_callBackPtrs[2]!=NULL_PTR)
+		(TIMER_callBackPtrs[2])();
 
 }
 
 ISR(TIMER1_COMPA_vect)
 {
 
-	(TIMER_callBackPtrs[3])();
+
+	if(TIMER_callBackPtrs[3]!=NULL_PTR)
+		(TIMER_callBackPtrs[3])();
 
 }
 
 ISR(TIMER1_COMPB_vect)
 {
 
-	(TIMER_callBackPtrs[4])();
+
+	if(TIMER_callBackPtrs[4]!=NULL_PTR)
+		(TIMER_callBackPtrs[4])();
 
 }
 
 ISR(TIMER1_CAPT_vect)
 {
 
-	(TIMER_callBackPtrs[5])();
+	if(TIMER_callBackPtrs[5]!=NULL_PTR)
+		(TIMER_callBackPtrs[5])();
 
 }
 
@@ -309,14 +411,16 @@ ISR(TIMER1_CAPT_vect)
 ISR(TIMER2_OVF_vect)
 {
 
-	(TIMER_callBackPtrs[6])();
+	if(TIMER_callBackPtrs[6]!=NULL_PTR)
+		(TIMER_callBackPtrs[6])();
 
 }
 
 ISR(TIMER2_COMP_vect)
 {
 
-	(TIMER_callBackPtrs[7])();
+	if(TIMER_callBackPtrs[7]!=NULL_PTR)
+		(TIMER_callBackPtrs[7])();
 
 }
 
