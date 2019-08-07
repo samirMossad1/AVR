@@ -55,19 +55,13 @@ typedef enum
 
 }TIMER_OUTPUT_TYPES;
 
-typedef enum
-{
-	_NO_INTERRUPT,
-	_INTERRUPT
-
-}TIMER_INTERRUPT;
 
 typedef enum
 {
 
-	_NON_INVERTING,
-	_INVERTING,
-	_IGNORE_EDGE
+	_IGNORE_EDGE,
+	_NON_INVERTING=2,
+	_INVERTING=3
 
 
 }TIMER_PWM_SIGNAL;
@@ -90,7 +84,6 @@ typedef struct timer_configStruct
 	TIMER_CHANNEL 		TIMER_CH;	 /*use the ignore option in case of timer0/2*/
 	TIMER_MODE  		TIMER_MODE;
 	TIMER_OUTPUT_TYPES	TIMER_OUT; 	 /*use the ignore option in case of normal mode*/
-	TIMER_INTERRUPT 	TIMER_INT;
 	TIMER_PINS			TIMER_PIN;
 	TIMER_PWM_SIGNAL	TIMER_PWM;   /*use the ignore option in case of NON pwm mode*/
 
