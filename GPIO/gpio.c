@@ -2,7 +2,7 @@
 #include "gpio.h"
 
 
-static volatile void (*ISR_GPIO_IntCallBackPtr[3])(void)={NULL_PTR,NULL_PTR,NULL_PTR};
+static void (*ISR_GPIO_IntCallBackPtr[3])(void)={NULL_PTR,NULL_PTR,NULL_PTR};
 
 
 
