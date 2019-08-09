@@ -14,6 +14,8 @@
 typedef enum
 {
 	SPEED_OC_0,
+	SPEED_OC_1_A,
+	SPEED_OC_1_B,
 	SPEED_OC_2
 
 }ENABLE_PIN;
