@@ -42,7 +42,7 @@ typedef unsigned char bool;
 
 
 typedef unsigned char 	uint8;
-typedef signed char 	suint8;
+typedef signed char 	suint8_t;
 typedef unsigned short 	uint16;
 typedef signed short 	suint16;
 typedef unsigned long 	uint32;
