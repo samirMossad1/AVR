@@ -10,21 +10,16 @@
 
 
 
-typedef enum
-{
-	_KEYPAD_3X3,
-	_KEYPAD_4X4
-
-}KEYPAD_DIMENSIONS;
-
-
 
 typedef struct
 {
 
 	GPIO_PIN * KEYPAD_rowPins;
 	GPIO_PIN * KEYPAD_columnPins;
-	KEYPAD_DIMENSIONS KEYPAD_DIM;
+	GPIO_PORT* KEYPAD_rowPORTS;
+	GPIO_PORT* KEYPAD_columnPORTS;
+	uint8_t    KEYPAD_noOfRows;
+	uint8_t    KEYPAD_noOfColumns;
 
 }KEYPAD_configStruct;
 
