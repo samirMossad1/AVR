@@ -7,6 +7,8 @@
 #include "std_types.h"
 #include "macros.h"
 
+#define F_CPU 8000000UL
+
 #define SERVO_TOP_VALUE_ICR1_FCPU_8MHZ_WITH_PRESCALAR_64 (uint16_t)(2499)
 #define SERVO_COMPARE_VALUE_RELATIVE_TO_ZERO_POSTION	 (uint8_t)(187)
 #define SERVO_COMPARE_VALUE_RELATIVE_TO_90_POSTION		 (uint8_t)(250)
