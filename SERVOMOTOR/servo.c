@@ -9,6 +9,47 @@ static bool timer1_pwmMode_init(const TIMER_CHANNEL);
 
 
 
+bool SERVO_init(const SERVO_configStruct* SERVO_configStructPtr)
+{
+
+	if(SERVO_configStructPtr == NULL_PTR)
+		return FALSE;
+
+	GPIO_pinConfigStruct GPIO_pin;
+
+	if(SERVO_configStructPtr->SERVO_PIN == SERVO_OC1A)
+	{
+
+		GPIO_pin.PORT=PORT_D;
+		GPIO_pin.PIN=PIN_5;
+		GPIO_pin.PIN_TYPE=_OUTPUT;
+		timer1_pwmMode_init(_CHANNEL_A);
+
+
+	}
+	else
+	{
+
+		GPIO_pin.PORT=PORT_D;
+		GPIO_pin.PIN=PIN_4;
+		GPIO_pin.PIN_TYPE=_OUTPUT;
+		timer1_pwmMode_init(_CHANNEL_B);
+
+	}
+
+
+	GPIO_pinInit(&GPIO_pin);
+
+
+	return TRUE;
+}
+
+
+
+
+
+
+
 static bool timer1_pwmMode_init(const TIMER_CHANNEL TIMER_CHAN)
 {
 
