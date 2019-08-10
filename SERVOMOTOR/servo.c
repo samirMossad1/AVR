@@ -5,6 +5,8 @@
 #include "gpio.h"
 
 
+#define SERVO_getCompareValue(angle) ( ( (angle*31)/(45.0) )+187 )
+
 static bool timer1_pwmMode_init(const TIMER_CHANNEL);
 
 
@@ -46,6 +48,26 @@ bool SERVO_init(const SERVO_configStruct* SERVO_configStructPtr)
 
 
 
+
+
+
+
+void SERVO_rotate(const SERVO_configStruct* SERVO_structPtr,suint8_t servoAngle_t)
+{
+
+	if(SERVO_structPtr == NULL_PTR)	return;
+
+
+	if(SERVO_structPtr->SERVO_PIN == SERVO_OC1A )
+	{
+		TIMER1A_COMPARE_REGISTER=(uint16_t)SERVO_getCompareValue(servoAngle_t);
+	}
+	else
+	{
+		TIMER1B_COMPARE_REGISTER=(uint16_t)SERVO_getCompareValue(servoAngle_t);
+	}
+
+}
 
 
 

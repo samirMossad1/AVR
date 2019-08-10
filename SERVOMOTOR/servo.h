@@ -28,7 +28,7 @@ typedef struct
 
 
 bool SERVO_init(const SERVO_configStruct*);
-void SERVO_rotate(const SERVO_configStruct*,uint8_t);
+void SERVO_rotate(const SERVO_configStruct*,suint8_t);
 
 
 #endif
