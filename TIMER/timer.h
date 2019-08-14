@@ -90,9 +90,6 @@ typedef struct timer_configStruct
 }TIMER_ConfigStruct;
 
 
-void (* CallBack_ptr)(void);
-
-
 bool TIMER_init(const TIMER_ConfigStruct *);
 
 bool TIMER_enable(const TIMER_NUMBER,const TIMER_PRESCALAR); /*Use this function to enable any timer for OVERFLOW/ICU mode*/
@@ -110,7 +107,6 @@ void TIMER1_ICU_setEdge(const TIMER_ICU_EDGE);
 uint16_t TIMER1_ICU_readCaptureReg();
 
 bool TIMER_interruptEnable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG,void(*)(void));
-
 
 bool TIMER_interruptDisable(const TIMER_NUMBER,const TIMER_CHANNEL,const TIMER_FLAG);
 

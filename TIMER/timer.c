@@ -6,10 +6,10 @@
 static bool timer0_overflowMode_init(void);
 static bool timer0_pwmMode_init(const TIMER_PWM_SIGNAL);
 static bool timer0_compareOnClearMode_init(TIMER_PINS,TIMER_OUTPUT_TYPES);
-static bool timer1_overflowMode_init(void);
-static bool timer1_compareOnClearMode_init(void);
-static bool timer1_pwmMode_init(const TIMER_CHANNEL,const TIMER_PWM_SIGNAL);
-static bool timer1_inputCaptureMode_init(void);
+//static bool timer1_overflowMode_init(void);
+//static bool timer1_compareOnClearMode_init(void);
+//static bool timer1_pwmMode_init(const TIMER_CHANNEL,const TIMER_PWM_SIGNAL);
+//static bool timer1_inputCaptureMode_init(void);
 static bool timer2_overflowMode_init(void);
 static bool timer2_pwmMode_init(const TIMER_PWM_SIGNAL);
 static bool timer2_compareOnClearMode_init(TIMER_PINS,TIMER_OUTPUT_TYPES);
@@ -56,28 +56,28 @@ bool TIMER_init(const TIMER_ConfigStruct* timerConfigStruct_ptr)
 
 		break;
 
-	case TIMER_1 :
-
-		if(timerConfigStruct_ptr->TIMER_MODE==_CTC_MODE)
-		{
-			return	timer2_compareOnClearMode_init(timerConfigStruct_ptr->TIMER_PIN,timerConfigStruct_ptr->TIMER_OUT);
-		}
-		else if(timerConfigStruct_ptr->TIMER_MODE==_PWM_MODE)
-		{
-			return timer1_pwmMode_init(timerConfigStruct_ptr->TIMER_CH,timerConfigStruct_ptr->TIMER_PWM);
-		}
-		else if(timerConfigStruct_ptr->TIMER_MODE==_NORMAL_MODE)
-		{
-			return  timer1_overflowMode_init();
-		}
-		else
-		{ /*ICU MODE*/
-
-			return timer1_inputCaptureMode_init();
-		}
-
-		break;
-
+//	case TIMER_1 :
+//
+//		if(timerConfigStruct_ptr->TIMER_MODE==_CTC_MODE)
+//		{
+//			return	timer2_compareOnClearMode_init(timerConfigStruct_ptr->TIMER_PIN,timerConfigStruct_ptr->TIMER_OUT);
+//		}
+//		else if(timerConfigStruct_ptr->TIMER_MODE==_PWM_MODE)
+//		{
+//			return timer1_pwmMode_init(timerConfigStruct_ptr->TIMER_CH,timerConfigStruct_ptr->TIMER_PWM);
+//		}
+//		else if(timerConfigStruct_ptr->TIMER_MODE==_NORMAL_MODE)
+//		{
+//			return  timer1_overflowMode_init();
+//		}
+//		else
+//		{ /*ICU MODE*/
+//
+//			return timer1_inputCaptureMode_init();
+//		}
+//
+//		break;
+//
 
 	case TIMER_2 :
 
@@ -96,10 +96,9 @@ bool TIMER_init(const TIMER_ConfigStruct* timerConfigStruct_ptr)
 
 		break;
 
-	default: return FALSE;
-
 	}
 
+	return FALSE;
 }
 
 
@@ -428,6 +427,8 @@ static bool timer0_pwmMode_init(const TIMER_PWM_SIGNAL TIMER_PWM)
 
 	TIMER0_CONTROL_REGISTER=0x00;
 
+	SET_BIT(GPIO_PORTB_DIRECTION_REGISTER,BIT_3);
+
 	if(TIMER_PWM==_NON_INVERTING)
 		TIMER0_CONTROL_REGISTER|=TIMER_PWM_MODE_NON_INVERTED_MASK;
 
@@ -477,6 +478,8 @@ static bool timer2_pwmMode_init(const TIMER_PWM_SIGNAL TIMER_PWM)
 
 	TIMER2_CONTROL_REGISTER=0x00;
 
+	SET_BIT(GPIO_PORTD_DIRECTION_REGISTER,BIT_7);
+
 	if(TIMER_PWM==_NON_INVERTING)
 		TIMER2_CONTROL_REGISTER|=TIMER_PWM_MODE_NON_INVERTED_MASK;
 
@@ -487,80 +490,82 @@ static bool timer2_pwmMode_init(const TIMER_PWM_SIGNAL TIMER_PWM)
 
 }
 
-static bool timer1_overflowMode_init(void)
-{
+//static bool timer1_overflowMode_init(void)
+//{
+//
+//	TIMER1A_CONTROL_REGISTER=TIMER1_OVERFLOW_MODE_MASK_A;
+//	TIMER1B_CONTROL_REGISTER=TIMER1_OVERFLOW_MODE_MASK_B;
+//
+//	return TRUE;
+//}
+//
+//static bool timer1_compareOnClearMode_init(const TIMER_CHANNEL TIMER_CHAN)
+//{
+//
+//	if(TIMER_CHAN==_CHANNEL_A)
+//	{
+//
+//
+//	}
+//	else if(TIMER_CHAN==_CHANNEL_B)
+//	{
+//
+//
+//	}
+//
+//	return TRUE;
+//}
+//
+//static bool timer1_pwmMode_init(const TIMER_CHANNEL TIMER_CHAN, const TIMER_PWM_SIGNAL TIMWE_PWM)
+//{
+//
+//	if(TIMER_CHAN==_CHANNEL_A)
+//	{
+//
+//		if(TIMWE_PWM==_INVERTING)
+//		{
+//
+//			TIMER1A_CONTROL_REGISTER&=~(TIMER1_CHAN_A_PWM_MODE_INVERTED_MASK_1);
+//			TIMER1A_CONTROL_REGISTER|=(TIMER1_CHAN_A_PWM_MODE_INVERTED_MASK_1);
+//
+//		}
+//		else if(TIMWE_PWM==_NON_INVERTING)
+//		{
+//			TIMER1A_CONTROL_REGISTER&=~(TIMER1_CHAN_A_PWM_MODE_NON_INVERTED_MASK_1);
+//			TIMER1A_CONTROL_REGISTER|=(TIMER1_CHAN_A_PWM_MODE_NON_INVERTED_MASK_1);
+//		}
+//
+//	}
+//	else if(TIMER_CHAN==_CHANNEL_B)
+//	{
+//
+//		if(TIMWE_PWM==_INVERTING)
+//		{
+//			TIMER1A_CONTROL_REGISTER&=~(TIMER1_CHAN_B_PWM_MODE_INVERTED_MASK_1);
+//			TIMER1A_CONTROL_REGISTER|=(TIMER1_CHAN_B_PWM_MODE_INVERTED_MASK_1);
+//
+//			TIMER1B_CONTROL_REGISTER&=~(TIMER1_CHAN_B_PWM_MODE_MASK_2);
+//			TIMER1B_CONTROL_REGISTER|=(TIMER1_CHAN_B_PWM_MODE_MASK_2);
+//
+//
+//		}
+//		else if(TIMWE_PWM==_NON_INVERTING)
+//		{
+//
+//			TIMER1A_CONTROL_REGISTER&=~(TIMER1_CHAN_B_PWM_MODE_INVERTED_MASK_1);
+//			TIMER1A_CONTROL_REGISTER|=(TIMER1_CHAN_B_PWM_MODE_INVERTED_MASK_1);
+//
+//
+//			TIMER1B_CONTROL_REGISTER&=~(TIMER1_CHAN_B_PWM_MODE_MASK_2);
+//			TIMER1B_CONTROL_REGISTER|=(TIMER1_CHAN_B_PWM_MODE_MASK_2);
+//		}
+//
+//	}
+//
+//	return TRUE;
+//}
+//
 
-	TIMER1A_CONTROL_REGISTER=TIMER1_OVERFLOW_MODE_MASK_A;
-	TIMER1B_CONTROL_REGISTER=TIMER1_OVERFLOW_MODE_MASK_B;
-
-	return TRUE;
-}
-
-static bool timer1_compareOnClearMode_init(const TIMER_CHANNEL TIMER_CHAN)
-{
-
-	if(TIMER_CHAN==_CHANNEL_A)
-	{
-
-
-	}
-	else if(TIMER_CHAN==_CHANNEL_B)
-	{
-
-
-	}
-
-	return TRUE;
-}
-
-static bool timer1_pwmMode_init(const TIMER_CHANNEL TIMER_CHAN, const TIMER_PWM_SIGNAL TIMWE_PWM)
-{
-
-	if(TIMER_CHAN==_CHANNEL_A)
-	{
-
-		if(TIMWE_PWM==_INVERTING)
-		{
-
-			TIMER1A_CONTROL_REGISTER&=~(TIMER1_CHAN_A_PWM_MODE_INVERTED_MASK_1);
-			TIMER1A_CONTROL_REGISTER|=(TIMER1_CHAN_A_PWM_MODE_INVERTED_MASK_1);
-
-		}
-		else if(TIMWE_PWM==_NON_INVERTING)
-		{
-			TIMER1A_CONTROL_REGISTER&=~(TIMER1_CHAN_A_PWM_MODE_NON_INVERTED_MASK_1);
-			TIMER1A_CONTROL_REGISTER|=(TIMER1_CHAN_A_PWM_MODE_NON_INVERTED_MASK_1);
-		}
-
-	}
-	else if(TIMER_CHAN==_CHANNEL_B)
-	{
-
-		if(TIMWE_PWM==_INVERTING)
-		{
-			TIMER1A_CONTROL_REGISTER&=~(TIMER1_CHAN_B_PWM_MODE_INVERTED_MASK_1);
-			TIMER1A_CONTROL_REGISTER|=(TIMER1_CHAN_B_PWM_MODE_INVERTED_MASK_1);
-
-			TIMER1B_CONTROL_REGISTER&=~(TIMER1_CHAN_B_PWM_MODE_MASK_2);
-			TIMER1B_CONTROL_REGISTER|=(TIMER1_CHAN_B_PWM_MODE_MASK_2);
-
-
-		}
-		else if(TIMWE_PWM==_NON_INVERTING)
-		{
-
-			TIMER1A_CONTROL_REGISTER&=~(TIMER1_CHAN_B_PWM_MODE_INVERTED_MASK_1);
-			TIMER1A_CONTROL_REGISTER|=(TIMER1_CHAN_B_PWM_MODE_INVERTED_MASK_1);
-
-
-			TIMER1B_CONTROL_REGISTER&=~(TIMER1_CHAN_B_PWM_MODE_MASK_2);
-			TIMER1B_CONTROL_REGISTER|=(TIMER1_CHAN_B_PWM_MODE_MASK_2);
-		}
-
-	}
-
-	return TRUE;
-}
 
 //static bool timer1_inputCaptureMode_init(void)
 
@@ -585,39 +590,39 @@ ISR(TIMER0_COMP_vect)
 
 }
 
-ISR(TIMER1_OVF_vect)
-{
-
-	if(TIMER_callBackPtrs[2]!=NULL_PTR)
-		(TIMER_callBackPtrs[2])();
-
-}
-
-ISR(TIMER1_COMPA_vect)
-{
-
-
-	if(TIMER_callBackPtrs[3]!=NULL_PTR)
-		(TIMER_callBackPtrs[3])();
-
-}
-
-ISR(TIMER1_COMPB_vect)
-{
-
-
-	if(TIMER_callBackPtrs[4]!=NULL_PTR)
-		(TIMER_callBackPtrs[4])();
-
-}
-
-ISR(TIMER1_CAPT_vect)
-{
-
-	if(TIMER_callBackPtrs[5]!=NULL_PTR)
-		(TIMER_callBackPtrs[5])();
-
-}
+//ISR(TIMER1_OVF_vect)
+//{
+//
+//	if(TIMER_callBackPtrs[2]!=NULL_PTR)
+//		(TIMER_callBackPtrs[2])();
+//
+//}
+//
+//ISR(TIMER1_COMPA_vect)
+//{
+//
+//
+//	if(TIMER_callBackPtrs[3]!=NULL_PTR)
+//		(TIMER_callBackPtrs[3])();
+//
+//}
+//
+//ISR(TIMER1_COMPB_vect)
+//{
+//
+//
+//	if(TIMER_callBackPtrs[4]!=NULL_PTR)
+//		(TIMER_callBackPtrs[4])();
+//
+//}
+//
+//ISR(TIMER1_CAPT_vect)
+//{
+//
+//	if(TIMER_callBackPtrs[5]!=NULL_PTR)
+//		(TIMER_callBackPtrs[5])();
+//
+//}
 
 
 ISR(TIMER2_OVF_vect)
